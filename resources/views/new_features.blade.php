@@ -20,7 +20,7 @@
 
         </div>
         <div class="main-img">
-            <img src="assets/newimages/Component 33 (5).png" alt="">
+            <img src="assets/newimages/Component 33 (5).png" alt="paperless-post-birthday-invitations">
         </div>
         <div class="tab text-border">
             <input id="tab1" type="radio" name="tabs" checked>

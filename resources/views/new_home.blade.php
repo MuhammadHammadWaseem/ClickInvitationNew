@@ -349,27 +349,27 @@
             <div class="slider">
                 <div class="mx-3">
                     <div class="card border-0 rounded-0">
-                        <img src="assets/newimages/Component 27 (1).png" alt="">
+                        <img src="assets/newimages/Component 27 (1).png" alt="paperless-post-birthday-invitations">
                     </div>
                 </div>
                 <div class="mx-3">
                     <div class="card border-0 rounded-0">
-                        <img src="assets/newimages/Component 27 (2).png" alt="">
+                        <img src="assets/newimages/Component 27 (2).png" alt="digital-invitations">
                     </div>
                 </div>
                 <div class="mx-3">
                     <div class="card border-0 rounded-0">
-                        <img src="assets/newimages/Component 28.png" alt="">
+                        <img src="assets/newimages/Component 28.png" alt="digital-wedding-invitations">
                     </div>
                 </div>
                 <div class="mx-3">
                     <div class="card border-0 rounded-0">
-                        <img src="assets/newimages/Component 33 (2).png" alt="">
+                        <img src="assets/newimages/Component 33 (2).png" alt="paperless-post-free-invitations">
                     </div>
                 </div>
                 <div class="mx-3">
                     <div class="card border-0 rounded-0">
-                        <img src="assets/newimages/Component 27 (1).png" alt="">
+                        <img src="assets/newimages/Component 27 (1).png" alt="graduation-party-invitation-cards">
                     </div>
                 </div>
             </div>

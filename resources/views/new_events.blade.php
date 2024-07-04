@@ -26,11 +26,11 @@
 
 
         <div class="images-container">
-            <div class="child-img1"><img src="assets/newimages/Component 28 (1).png" alt=""></div>
-            <div class="child-img2"> <img src="assets/newimages/Component 33 (4).png" alt=""></div>
+            <div class="child-img1"><img src="assets/newimages/Component 28 (1).png" alt="wedding-invitations-with-rsvp"></div>
+            <div class="child-img2"> <img src="assets/newimages/Component 33 (4).png" alt="first-birthday-party-invitation-cards"></div>
             <div class="child-img3">
-                <img src="assets/newimages/Component 34 (1).png" alt="">
-                <a href="#wedding-section"><img src="assets/newimages/Component 37.png" alt=""
+                <img src="assets/newimages/Component 34 (1).png" alt="rsvp-wedding-cards">
+                <a href="#wedding-section"><img src="assets/newimages/Component 37.png" alt="paperless-birthday-party-invitations"
                         class="scroll-below"></a>
             </div>
         </div>
@@ -58,8 +58,8 @@
 
             <div class="wedd-slider">
                 <div class="w3-content">
-                    <img class="mySlides1" src="assets/newimages/Component 27 (1).png">
-                    <img class="mySlides1" src="assets/newimages/Component 27 (2).png">
+                    <img class="mySlides1" src="assets/newimages/Component 27 (1).png" alt="digital-invitations">
+                    <img class="mySlides1" src="assets/newimages/Component 27 (2).png" alt="paperless-post-birthday-invitations">
                     <button class="btn-left" onclick="plusDivs(-1, 0)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 0)">&#10095;</button>
 
@@ -92,8 +92,8 @@
 
             <div class="wedd-slider">
                 <div class="w3-content">
-                    <img class="mySlides2" src="assets/newimages/Component 27 (2).png">
-                    <img class="mySlides2" src="assets/newimages/Component 27 (1).png">
+                    <img class="mySlides2" src="assets/newimages/Component 27 (2).png" alt="digital-wedding-invitations">
+                    <img class="mySlides2" src="assets/newimages/Component 27 (1).png" alt="paperless-post-free-invitations">
                     <button class="btn-left" onclick="plusDivs(-1, 1)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 1)">&#10095;</button>
 
@@ -128,8 +128,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides3" src="assets/newimages/Component 27 (1).png">
-                    <img class="mySlides3" src="assets/newimages/Component 27 (2).png">
+                    <img class="mySlides3" src="assets/newimages/Component 27 (1).png" alt="graduation-party-invitation-cards">
+                    <img class="mySlides3" src="assets/newimages/Component 27 (2).png" alt="wedding-invitations-with-rsvp">
                     <button class="btn-left" onclick="plusDivs(-1, 2)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 2)">&#10095;</button>
 
@@ -164,8 +164,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides4" src="assets/newimages/Component 27 (2).png">
-                    <img class="mySlides4" src="assets/newimages/Component 27 (1).png">
+                    <img class="mySlides4" src="assets/newimages/Component 27 (2).png" alt="first-birthday-party-invitation-cards">
+                    <img class="mySlides4" src="assets/newimages/Component 27 (1).png" alt="rsvp-wedding-cards">
                     <button class="btn-left" onclick="plusDivs(-1, 3)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 3)">&#10095;</button>
 
@@ -199,8 +199,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides5" src="assets/newimages/Component 27 (1).png">
-                    <img class="mySlides5" src="assets/newimages/Component 27 (2).png">
+                    <img class="mySlides5" src="assets/newimages/Component 27 (1).png" alt="paperless-birthday-party-invitations">
+                    <img class="mySlides5" src="assets/newimages/Component 27 (2).png" alt="paperless-post-birthday-invitations">
                     <button class="btn-left" onclick="plusDivs(-1, 4)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 4)">&#10095;</button>
 
@@ -234,8 +234,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides6" src="assets/newimages/Component 27 (2).png">
-                    <img class="mySlides6" src="assets/newimages/Component 27 (1).png">
+                    <img class="mySlides6" src="assets/newimages/Component 27 (2).png" alt="digital-invitations">
+                    <img class="mySlides6" src="assets/newimages/Component 27 (1).png" alt="rsvp-wedding-cards">
                     <button class="btn-left" onclick="plusDivs(-1, 5)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 5)">&#10095;</button>
 
@@ -270,8 +270,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides7" src="assets/newimages/Component 27 (2).png">
-                    <img class="mySlides7" src="assets/newimages/Component 27 (1).png">
+                    <img class="mySlides7" src="assets/newimages/Component 27 (2).png" alt="paperless-post-free-invitations">
+                    <img class="mySlides7" src="assets/newimages/Component 27 (1).png" alt="graduation-party-invitation-cards">
                     <button class="btn-left" onclick="plusDivs(-1, 6)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 6)">&#10095;</button>
 
@@ -306,8 +306,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides8" src="assets/newimages/Component 27 (2).png">
-                    <img class="mySlides8" src="assets/newimages/Component 27 (1).png">
+                    <img class="mySlides8" src="assets/newimages/Component 27 (2).png" alt="digital-wedding-invitations">
+                    <img class="mySlides8" src="assets/newimages/Component 27 (1).png" alt="wedding-invitations-with-rsvp">
                     <button class="btn-left" onclick="plusDivs(-1, 7)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 7)">&#10095;</button>
 
@@ -345,8 +345,8 @@
 
                 <!-- <img src="assets/newimages/Component 33 (4).png" alt=""> -->
                 <div class="w3-content">
-                    <img class="mySlides9" src="assets/newimages/Component 27 (2).png">
-                    <img class="mySlides9" src="assets/newimages/Component 27 (1).png">
+                    <img class="mySlides9" src="assets/newimages/Component 27 (2).png" alt="paperless-birthday-party-invitations">
+                    <img class="mySlides9" src="assets/newimages/Component 27 (1).png" alt="rsvp-wedding-cards">
                     <button class="btn-left" onclick="plusDivs(-1, 8)">&#10094;</button>
                     <button class="btn-right" onclick="plusDivs(1, 8)">&#10095;</button>
 
@@ -369,7 +369,7 @@
         <div style="display: none" class="image-container">
 
             <div class="left-img">
-                <img src="assets/newimages/Component 27 (2).png" alt="">
+                <img src="assets/newimages/Component 27 (2).png" alt="digital-invitations">
 
                 <p class="text12">
                     Dorem ipsum dolor sit
@@ -382,7 +382,7 @@
                 <button class="read-more-btn12">Read More...</button>
             </div>
             <div class="right-img">
-                <img src="assets/newimages/Component 33.png" alt="">
+                <img src="assets/newimages/Component 33.png" alt="paperless-post-free-invitations">
                 <p class="text13">
                     Dorem ipsum dolor sit
                     <span class="dots"></span>
