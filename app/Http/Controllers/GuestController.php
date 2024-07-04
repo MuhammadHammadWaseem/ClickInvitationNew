@@ -136,49 +136,46 @@ class GuestController extends Controller
         }
         return $guests;
     }
-    public function getGuestsqr($id,$date)
-    {
-        $guests = \App\Guest::where('id_event', $id)->where('mainguest', 1)->get();
-        // $event = \App\Event::where('id_event', $id)->first();
-        // $date = Carbon::parse($event->date);
-        $date = Carbon::parse($date);
-        $eventDate = $date->format('F j, Y');
-        require_once '/var/www/html/clickinvitation/app/Http/Controllers/phpqrcode/qrlib.php';
-        if ($guests->isNotEmpty()) {
-            $guestData = [];
+    public function getGuestsqr($id, $date)
+{
+    $guests = \App\Guest::where('id_event', $id)->where('mainguest', 1)->get();
+    $date = Carbon::parse($date);
+    $eventDate = $date->format('F j, Y');
+    
+    require_once '/var/www/html/clickinvitation/app/Http/Controllers/phpqrcode/qrlib.php';
+    
+    if ($guests->isNotEmpty()) {
+        $guestData = [];
+        $card = \App\Card::where('id_event', $id)->first();
+        $lang = Session('applocale', 'en'); // Default to 'en' if session is not set
+        
+        if ($card && $card->id_card) {
             foreach ($guests as $g) {
-                $cardId = \App\Card::where('id_event', $id)->first();
-                if ($cardId && $cardId->id_card) {
-                    $guest_code = $g->code;
-                    $guest_name = $g->name;
-                    $guest_name_without_spaces = str_replace(' ', '', $guest_name);
-                    $lang = Session('applocale');
-                    if ($lang == "en") {
-                        $url = url('/cardInvitations/' . $cardId->id_card . '/' . $guest_code . '/' . $guest_name_without_spaces . '/' . 'en');
-                    } else if ($lang == "fr") {
-                        $url = url('/cardInvitations/' . $cardId->id_card . '/' . $guest_code . '/' . $guest_name_without_spaces . '/' . 'fr');
-                    } else {
-                        $url = url('/cardInvitations/' . $cardId->id_card . '/' . $guest_code . '/' . $guest_name_without_spaces . '/' . 'en');
-                    }
-                    $qrcode = 'images/' . $g->id_guest . $guest_code . '.png';
-                    if (!file_exists($qrcode)) {
-                        \QRcode::png($url, $qrcode, 'H', 4, 4);
-                    }
-                    $guestData[] = [
-                        'name' => $guest_name,
-                        'qr_code_path' => $qrcode,
-                        'eventDate' => $eventDate,
-                    ];
+                $guest_code = $g->code;
+                $guest_name = $g->name;
+                $guest_name_without_spaces = str_replace(' ', '', $guest_name);
+                $url = url('/cardInvitations/' . $card->id_card . '/' . $guest_code . '/' . $guest_name_without_spaces . '/' . $lang);
+                $qrcode = 'images/' . $g->id_guest . $guest_code . '.png';
+
+                if (!file_exists($qrcode)) {
+                    \QRcode::png($url, $qrcode, 'H', 4, 4);
                 }
+                $guestData[] = [
+                    'name' => $guest_name,
+                    'qr_code_path' => $qrcode,
+                    'eventDate' => $eventDate,
+                ];
             }
-                    // dd($guestData);
-            set_time_limit(600);
-            $pdf = \Barryvdh\DomPDF\Facade::loadView('qrPdf', ['guests' => $guestData, 'eventDate' => $eventDate]);
-            return $pdf->download('tables.pdf');
-        } else {
-            return response()->json(['message' => 'No guests found.']);
         }
+
+        set_time_limit(600);
+        $pdf = \Barryvdh\DomPDF\Facade::loadView('qrPdf', ['guests' => $guestData, 'eventDate' => $eventDate]);
+        return $pdf->download('tables.pdf');
+    } else {
+        return response()->json(['message' => 'No guests found.']);
     }
+}
+
     public function showguestsDeclined(Request $request)
     {
         $guests = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 1)->get();
