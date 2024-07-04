@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Response;
 
 class GuestController extends Controller
 {
+    // 
     /**
      * Effettua login.
      *
