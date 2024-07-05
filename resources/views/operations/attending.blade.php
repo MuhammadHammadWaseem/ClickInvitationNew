@@ -1127,7 +1127,7 @@
                     }).then(function(response) {
                         $scope.mymembers();
                         console.log('number', number);
-                        if(number == undefined){
+                        if (number == undefined) {
                             Swal.fire({
                                 title: '{{ __('attending.Success') }}',
                                 text: '{{ __('attending.Guest edit successfully') }}',
@@ -1137,36 +1137,37 @@
                             }).then((result) => {
                                 window.location.reload();
                             })
-                        }else{
+                        } else {
                             if (TotalGuests != memberNumber) {
-                            Swal.fire({
-                                title: '{{ __('attending.Success') }}',
-                                text: '{{ __('attending.You are allowed for the') }}' + ' ' + number +
-                                    ' {{ __('attending.members of Compagnons') }}',
-                                icon: 'success',
-                                showCancelButton: true,
-                                confirmButtonText: '{{ __('attending.Add Now') }}',
-                                confirmButtonColor: '#198754',
-                                cancelButtonText: '{{ __('attending.Later') }}',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // Handle Add Now action - Open Modal
-                                    $('#addMemberModal').modal('show');
-                                } else {
-                                    // Handle Later action - Reload the page
-                                    location.reload();
-                                }
-                            });
+                                Swal.fire({
+                                    title: '{{ __('attending.Success') }}',
+                                    text: '{{ __('attending.You are allowed for the') }}' +
+                                        ' ' + number +
+                                        ' {{ __('attending.members of Compagnons') }}',
+                                    icon: 'success',
+                                    showCancelButton: true,
+                                    confirmButtonText: '{{ __('attending.Add Now') }}',
+                                    confirmButtonColor: '#198754',
+                                    cancelButtonText: '{{ __('attending.Later') }}',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Handle Add Now action - Open Modal
+                                        $('#addMemberModal').modal('show');
+                                    } else {
+                                        // Handle Later action - Reload the page
+                                        location.reload();
+                                    }
+                                });
                             } else {
-                            Swal.fire({
-                                title: '{{ __('attending.Success') }}',
-                                text: '{{ __('attending.Guest edit successfully') }}',
-                                icon: 'success',
-                                confirmButtonText: '{{ __('attending.OK') }}',
-                                confirmButtonColor: '#198754'
-                            }).then((result) => {
-                                window.location.reload();
-                            })
+                                Swal.fire({
+                                    title: '{{ __('attending.Success') }}',
+                                    text: '{{ __('attending.Guest edit successfully') }}',
+                                    icon: 'success',
+                                    confirmButtonText: '{{ __('attending.OK') }}',
+                                    confirmButtonColor: '#198754'
+                                }).then((result) => {
+                                    window.location.reload();
+                                })
                             }
                         }
 
@@ -1263,7 +1264,15 @@
                             $scope.mymembers();
                             console.log(TotalGuests, memberNumber)
                             if (TotalGuests != memberNumber) {
-                                $('#addMemberModal').modal('show');
+                                swal.fire({
+                                    title: 'Success',
+                                    text: 'Your reservation has been confirmed successfully!',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: '#198754'
+                                }).then((result) => {
+                                    $('#addMemberModal').modal('show');
+                                })
                             } else {
                                 window.location.reload();
                             }
@@ -1371,7 +1380,7 @@
 
                             if (NowGuests >= {{ $guest->members_number }}) {
                                 console.log("Max number of guests reached");
-                                if(isMeal !== 0){
+                                if (isMeal !== 0) {
                                     Swal.fire({
                                         icon: "success",
                                         title: "{{ __('attending.Success') }}",
@@ -1381,18 +1390,18 @@
                                     }).then((result) => {
                                         history.back();
                                     })
-                                }else{
+                                } else {
 
                                     Swal.fire({
                                         icon: "success",
-                                    title: "{{ __('attending.Success') }}",
-                                    text: "{{ __('attending.Guest Add successfully') }}",
-                                    confirmButtonText: "{{ __('attending.Return to Invitation') }}",
-                                    confirmButtonColor: '#198754',
-                                }).then((result) => {
-                                    history.back();
-                                })
-                            }
+                                        title: "{{ __('attending.Success') }}",
+                                        text: "{{ __('attending.Guest Add successfully') }}",
+                                        confirmButtonText: "{{ __('attending.Return to Invitation') }}",
+                                        confirmButtonColor: '#198754',
+                                    }).then((result) => {
+                                        history.back();
+                                    })
+                                }
                             } else {
                                 Swal.fire({
                                     icon: "success",
