@@ -84,6 +84,7 @@
 
     #main-bg {
         background: url("http://clickadmin.searchmarketingservices.online/eventcards/{{ $cardData[0]->bgName }}");
+        background-size: cover;
     }
 
     .container-fluid {

@@ -162,9 +162,9 @@
         }
 
         #flipButton {
-            margin-top: 20px;
             position: absolute;
-            top: 1px;
+            bottom: 70px;
+            right: 50%;
         }
     .wrapper.theAnimation>img {
         max-width: 50px;
@@ -219,6 +219,7 @@
 
     #main-bg {
         background: url("http://clickadmin.searchmarketingservices.online/eventcards/{{ $card[0]->bgName }}");
+        background-size: cover;
     }
 
     .container-fluid {
