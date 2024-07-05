@@ -10,7 +10,6 @@
         gtag('js', new Date());
 
         gtag('config', 'G-QD4QH7KNBF');
-
     </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +22,8 @@
 </head>
 <div class="thisBody" style="display:none">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- data1: title1, title2, title3, title4, name1, name2, cermony, other1 other2, other3 -->
     <!-- data2: background, card, titleFont, titleColor, nameFont, nameColor, cermonyFont, cermonyColor, otherFont otherColor -->
     <div class="container-fluid" id="main-bg">
@@ -32,8 +32,8 @@
         <!-- envlope-->
         <div class="wrapper theAnimation">
             <div class="lid one"></div>
-            @if($card[0]->stamp !== null)
-            <img src="/event-images/{{ $eventData[0]->id_event }}/stamp/{{ $card[0]->stamp }}" alt="">
+            @if ($card[0]->stamp !== null)
+                <img src="/event-images/{{ $eventData[0]->id_event }}/stamp/{{ $card[0]->stamp }}" alt="">
             @endif
             <div class="lid two"></div>
             {{-- <img class="envelope2" src="{{ asset('assets\images\envlope.png') }}" /> --}}
@@ -42,27 +42,31 @@
                 <input type="hidden" id="id_event" value="{{ $eventData[0]->json }}">
             </div>
             @if (isset($guestName))
-            <p style="font-family: '{{ $card[0]->envTitleFont   }}', cursive; color: {{ $card[0]->envTitleColor }};width: 300px;text-align: center;transform: translateX(-50%);margin-top: 50px;font-size: 1.2em;position: absolute;z-index: 6;left: 50%;bottom: 0;">
-                <sup style="font-size: 0.5em">{{ __('cardinvit.TO') }}</sup> {{ $guestName }}
-            </p>
+                <p
+                    style="font-family: '{{ $card[0]->envTitleFont }}', cursive; color: {{ $card[0]->envTitleColor }};width: 300px;text-align: center;transform: translateX(-50%);margin-top: 50px;font-size: 1.2em;position: absolute;z-index: 6;left: 50%;bottom: 0;">
+                    <sup style="font-size: 0.5em">{{ __('cardinvit.TO') }}</sup> {{ $guestName }}
+                </p>
             @endif
 
             <div class="envelope_bottom"></div>
             <div id="container" class="letter">
                 <div class="flip-card" id="flipCard">
                     <canvas id="canvas" style=" scale: 0.4 !important;">Your browser doesn't support canvas</canvas>
-                    <img src="{{ asset('/card-images/' . $eventData[0]->id_event . 'Back.png') }}" class="back" id="cardImage" alt="">
+                    <img src="{{ asset('/card-images/' . $eventData[0]->id_event . 'Back.png') }}" class="back"
+                        id="cardImage" alt="">
                 </div>
             </div>
         </div>
-        @if($card[0]->two_sided == 1)
-        <button id="flipButton" class="btn btn-primary">Flip Card</button>
+        @if ($card[0]->two_sided == 1)
+            <button id="flipButton" class="btn btn-primary">Flip Card</button>
         @endif
     </div>
 
     @if ($card[0]->rsvp != '0,0,0,0,0,0')
-    <!-- Button to submit RSVP -->
-    <a class="btn btn-primary extra-card" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" style="
+        <!-- Button to submit RSVP -->
+        <a class="btn btn-primary extra-card" id="submit-rsvp" data-bs-toggle="offcanvas" href="#offcanvasExample"
+            role="button" aria-controls="offcanvasExample"
+            style="
      
      z-index: 7;
      position: absolute;
@@ -73,9 +77,12 @@
      /* margin: 0 5px; */
  
  ">
-        {{ __('cardinvit.SUBMIT YOUR RSVP') }}
-    </a>
-    <a class="btn btn-success extra-card" href="{{env('APP_URL')}}CheckInQr/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}" target="_blank" style="
+            {{ __('cardinvit.SUBMIT YOUR RSVP') }}
+        </a>
+        <a class="btn btn-success extra-card" id="checkin"
+            href="{{ env('APP_URL') }}CheckInQr/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
+            target="_blank"
+            style="
            
      z-index: 7;
      position: absolute;
@@ -86,8 +93,8 @@
      /* margin: 0 5px; */
  
         ">
-        {{ __('cardinvit.Check in QR Code') }}
-    </a>
+            {{ __('cardinvit.Check in QR Code') }}
+        </a>
     @endif
     <!-- Toggle sidebar of RSVP -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -98,74 +105,84 @@
         <div class="offcanvas-body ">
 
             @if ($card[0]->rsvp[0] == '1')
-            <a href="{{ env('APP_URL') }}attending/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}" class="btn btn-outline-success modify ">{{ __('cardinvit.Attending') }}</a><br>
+                <a href="{{ env('APP_URL') }}attending/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
+                    class="btn btn-outline-success modify ">{{ __('cardinvit.Attending') }}</a><br>
             @endif
 
             @if ($card[0]->rsvp[2] == '1')
-            <a href="{{ env('APP_URL') }}gift-suggestion/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}" class="btn btn-outline-primary modify ">{{ __('cardinvit.Gift Suggestions') }}</a><br>
+                <a href="{{ env('APP_URL') }}gift-suggestion/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
+                    class="btn btn-outline-primary modify ">{{ __('cardinvit.Gift Suggestions') }}</a><br>
             @endif
 
             @if ($card[0]->rsvp[4] == '1')
-            <a href="{{ env('APP_URL') }}check-in/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}" class="btn btn-outline-primary modify ">{{ __('cardinvit.At the reception Check-In') }}</a><br>
+                <a href="{{ env('APP_URL') }}check-in/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
+                    class="btn btn-outline-primary modify ">{{ __('cardinvit.At the reception Check-In') }}</a><br>
             @endif
 
             @if ($card[0]->rsvp[6] == '1')
-            <a href="{{ env('APP_URL') }}add-photos/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}" class="btn btn-outline-primary modify ">{{ __('cardinvit.Upload your Photos') }}</a><br>
+                <a href="{{ env('APP_URL') }}add-photos/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
+                    class="btn btn-outline-primary modify ">{{ __('cardinvit.Upload your Photos') }}</a><br>
             @endif
 
             @if ($card[0]->rsvp[8] == '1')
-            <a href="{{ env('APP_URL') }}sorry-cant/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}" class="btn btn-outline-secondary modify ">{{ __('cardinvit.Sorry! I Can\'t') }}</a>
+                <a href="{{ env('APP_URL') }}sorry-cant/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
+                    class="btn btn-outline-secondary modify ">{{ __('cardinvit.Sorry! I Can\'t') }}</a>
             @endif
 
             @if ($card[0]->rsvp[10] == '1')
-            <a href="{{ env('APP_URL') }}website/{{ $card[0]->id_event }}" class="btn btn-outline-success modify ">{{ __('cardinvit.Go to the website') }}</a>
+                <a href="{{ env('APP_URL') }}website/{{ $card[0]->id_event }}"
+                    class="btn btn-outline-success modify ">{{ __('cardinvit.Go to the website') }}</a>
             @endif
             <br /><br /><br />
-            <a href="https://www.youtube.com/watch?v=spxr19KtIuQ" target="blank" class="btn btn-outline-secondary modify ">{{ __('cardinvit.Learn How RSVP work') }}</a>
+            <a href="https://www.youtube.com/watch?v=spxr19KtIuQ" target="blank"
+                class="btn btn-outline-secondary modify ">{{ __('cardinvit.Learn How RSVP work') }}</a>
         </div>
     </div>
 </div>
 </div>
 <button class="btnPreview" id="myBtn" onclick="animationPage(), myBtn1()" hidden>Preview Animation</button>
 <script src="/assets/js/animationScript.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
 </script>
 <style>
     #container {
-            perspective: 1000px;
-        }
+        perspective: 1000px;
+    }
 
-        .flip-card {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
+    .flip-card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
 
-        .flip-card .front, .flip-card .back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-        }
+    .flip-card .front,
+    .flip-card .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        top: 0;
+        left: 0;
+        margin-top: -2px;
+    }
 
-        .flip-card .back {
-            transform: rotateY(180deg);
-        }
+    .flip-card .back {
+        transform: rotateY(180deg);
+    }
 
-        .flipped {
-            transform: rotateY(180deg);
-        }
+    .flipped {
+        transform: rotateY(180deg);
+    }
 
-        #flipButton {
-            position: absolute;
-            bottom: 70px;
-            right: 50%;
-        }
+    #flipButton {
+        position: absolute;
+        bottom: 70px;
+        right: 50%;
+    }
+
     .wrapper.theAnimation>img {
         max-width: 50px;
         height: 30px;
@@ -234,7 +251,7 @@
         margin: 0px auto;
         height: 200px;
         width: 300px;
-        background-color: {{$card[0]->cardColorIn}};
+        background-color: {{ $card[0]->cardColorIn }};
         position: relative;
         display: flex;
         justify-content: center;
@@ -260,7 +277,7 @@
     /*efe7d1*/
     /* Lid when closed */
     .lid.one {
-        border-top: 100px solid {{$card[0]->cardColorOut}};
+        border-top: 100px solid {{ $card[0]->cardColorOut }};
         transform: rotateX(0deg);
         -webkit-transform: rotateX(0deg);
         -moz-transform: rotateX(0deg);
@@ -302,9 +319,9 @@
         top: 0;
         left: 0;
         border-top: 100px solid transparent;
-        border-right: 150px solid {{$card[0]->cardColorOut}};
-        border-bottom: 100px solid {{$card[0]->cardColorOut}};
-        border-left: 150px solid {{$card[0]->cardColorOut}};
+        border-right: 150px solid {{ $card[0]->cardColorOut }};
+        border-bottom: 100px solid {{ $card[0]->cardColorOut }};
+        border-left: 150px solid {{ $card[0]->cardColorOut }};
         z-index: 5;
         /* display: none; */
     }
@@ -876,32 +893,70 @@
         display: block !important;
     }
 
+    @media only screen and (max-width: 760px) {
+        #flipButton {
+            right: 40%!important;
+        }
+
+        #checkin {
+            z-index: 7!important;
+            position: absolute!important;
+            bottom: 20px!important;
+            left: 86%!important;
+            transform: translateX(-77%)!important;
+            width: 44%!important;
+        }
+
+        #submit-rsvp {
+            z-index: 7!important;
+            position: absolute!important;
+            bottom: 20px!important;
+            left: 40%!important;
+            transform: translateX(-80%)!important;
+            width: 45%!important;
+        }
+
+    }
+    @media only screen and (max-width: 370px) {
+        #checkin {
+            width: 45%!important;
+        }
+
+        #submit-rsvp {
+            width: 49%!important;
+        }
+
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js" integrity="sha512-CeIsOAsgJnmevfCi2C7Zsyy6bQKi43utIjdA87Q0ZY84oDqnI0uwfM9+bKiIkI75lUeI00WG/+uJzOmuHlesMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"
+    integrity="sha512-CeIsOAsgJnmevfCi2C7Zsyy6bQKi43utIjdA87Q0ZY84oDqnI0uwfM9+bKiIkI75lUeI00WG/+uJzOmuHlesMA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
     const flipCard = document.getElementById('flipCard');
-        const flipButton = document.getElementById('flipButton');
-        if (flipButton){
-            flipButton.addEventListener('click', () => {
-                flipCard.classList.toggle('flipped');
-            });
-        }
+    const flipButton = document.getElementById('flipButton');
+    if (flipButton) {
+        flipButton.addEventListener('click', () => {
+            flipCard.classList.toggle('flipped');
+        });
+    }
     let canv;
     window.addEventListener("load", () => {
         $(document).ready(function() {
             $("body").css("background-color", "#e9e9e9");
             canv = new fabric.StaticCanvas('canvas', {
-                backgroundColor: 'white'
-                , width: 450
-                , height: 680
-            , });
+                backgroundColor: 'white',
+                width: 450,
+                height: 680,
+            });
 
             console.log("fabric canvas loaded");
             handleJSONImport();
@@ -970,5 +1025,4 @@
                 letterDiv.textContent = JSON.stringify(jsonData, null, 2); // Display JSON data
             }
         });
-
 </script>
