@@ -17,7 +17,9 @@
     .sidebaraddtext {
         overflow: scroll;
     }
-
+ #webtoolsdiv .topbtns{
+    font-size: 1.2rem !important;
+ }
     #logo {
         padding: none;
         margin: 0px;
@@ -499,7 +501,6 @@ display: none;
 
         <div class="col-auto" style="padding: 0%; margin: 0%;"><button type="button" style="width:100px"
                 class="btn pdfbtncolor" data-bs-toggle="modal" data-bs-target="#exampleModal">Settings</button></div>
-
         <div class="col-auto" style="padding: 0%; margin: 0%;"><button type="button" style="width:100px" class="btn"
                 data-bs-toggle="modal" data-bs-target="#animationModal">Set Animations</button></div>
 
