@@ -73,6 +73,16 @@
 		padding: 7px;
 		font-size: 12px;
 	}
+	
+	div#exampleModal5 .modal-header>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between !important;
+	}
+
+	div#exampleModal5 .modal-header button.btn-close {
+	    margin: 0;
+	}
 
 	@media only screen and (max-width: 767px) {
 		div#BtnsBox {
@@ -409,12 +419,16 @@ display: none;
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModal5Label">Guests of table {{editname}} (
-						{{actualnumguest}}/{{editnumguest}} guests) </h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<div class="d-flex justify-content-center align-items-center w-100">
+						<h5 class="modal-title" id="exampleModal5Label">Guests of table {{editname}}
+							({{actualnumguest}}/{{editnumguest}} guests) </h5>
+						<input ng-model="search" class="form-control w-25" placeholder="Search" type="text">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
 				</div>
 				<div class="modal-body">
-					<div class="row listguest" ng-repeat="g in guests | orderBy:'-tablename'" ng-click="sel(g);"
+					<div class="row listguest" ng-repeat="g in guests | filter:customFilter | orderBy:'-tablename'"
+						ng-click="sel(g);"
 						ng-style="{ background: g.selected ? 'orange' : '#ebebeb', color: g.selected ? 'white' : '#939191' }">
 						<div class="col">{{g.name}}</div>
 						<div class="col">{{ g.mealName }}</div>
@@ -442,18 +456,22 @@ display: none;
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<p class="text-danger text-center ">Send an reminder to guests who have not selected their meals yet.</p>
-					<div class="row listguest" ng-repeat="g in filteredGuests = (guests | filter:filterGuests  | orderBy:'-tablename')" 
+					<p class="text-danger text-center ">Send an reminder to guests who have not selected their meals
+						yet.</p>
+					<div class="row listguest"
+						ng-repeat="g in filteredGuests = (guests | filter:filterGuests  | orderBy:'-tablename')"
 						ng-style="{ background: g.selected ? 'orange' : '#ebebeb', color: g.selected ? 'white' : '#939191' }">
 
 						<div class="col" ng-show="g.mainguest == 1">{{ g.name }}</div>
-						<div class="col" ng-show="g.mainguest == 0">{{ getMainGuestName(g.parent_id_guest) }} | Member ( {{ g.name }} )</div>
+						<div class="col" ng-show="g.mainguest == 0">{{ getMainGuestName(g.parent_id_guest) }} | Member (
+							{{ g.name }} )</div>
 
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button class="btn btn-orange" data-bs-dismiss="modal" ng-click="sendMealEmail();" ng-disabled="filteredGuests.length === 0">Send Reminder</button>
+					<button class="btn btn-orange" data-bs-dismiss="modal" ng-click="sendMealEmail();"
+						ng-disabled="filteredGuests.length === 0">Send Reminder</button>
 				</div>
 			</div>
 		</div>

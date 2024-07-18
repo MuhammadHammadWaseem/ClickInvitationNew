@@ -3091,6 +3091,36 @@ sampleApp.controller("GueststablesCtrl", [
       });
     }
 
+    // Custom filter function
+    $scope.customFilter = function(guest) {
+      if (!$scope.search) return true; // If no search term, show all guests
+
+      let searchTerm = $scope.search.toLowerCase();
+
+      // Helper function to safely get the lowercase string
+      function safeToLowerCase(value) {
+          return value ? value.toString().toLowerCase() : '';
+      }
+
+      // Check if the guest matches the search term
+      let matchesGuest = safeToLowerCase(guest.name).includes(searchTerm) || 
+                         safeToLowerCase(guest.mealName).includes(searchTerm) ||
+                         safeToLowerCase(guest.id_guest).includes(searchTerm) ||
+                         safeToLowerCase(guest.parent_id_guest).includes(searchTerm);
+
+      if (matchesGuest) return true;
+
+      // Check if the guest's parent matches the search term
+      let parent = $scope.guests.find(g => g.id_guest === guest.parent_id_guest);
+      if (parent && (safeToLowerCase(parent.name).includes(searchTerm) || 
+                     safeToLowerCase(parent.mealName).includes(searchTerm) ||
+                     safeToLowerCase(parent.id_guest).includes(searchTerm))) {
+          return true;
+      }
+
+      return false;
+  };
+
     $scope.setg = function () {
       angular.forEach($scope.guests, function (value, key) {
         $scope.guests[key].selected = 0;
