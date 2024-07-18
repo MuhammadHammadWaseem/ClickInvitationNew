@@ -79,7 +79,7 @@
         right: auto;
         left: 5px;
         z-index: 9;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     #main-bg {

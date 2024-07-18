@@ -2276,7 +2276,7 @@ function saveData() {
       .catch((error) => {
         console.error("Error:", error);
       });
-    saveSetting();
+    // saveSetting();
   } else {
     console.log("Back is not checked.");
     const json = JSON.stringify(canv.toJSON());
@@ -2306,7 +2306,7 @@ function saveData() {
     .catch((error) => {
       console.error("Error:", error);
     });
-  saveSetting();
+  // saveSetting();
   }
 }
 
@@ -2415,7 +2415,7 @@ function saveAll() {
       .catch((error) => {
         console.error("Error:", error);
       });
-    saveSetting();
+    // saveSetting();
 
 
   } else {
@@ -2474,7 +2474,7 @@ function saveAll() {
       .catch((error) => {
         console.error("Error:", error);
       });
-    saveSetting();
+    // saveSetting();
 
   }
 }
