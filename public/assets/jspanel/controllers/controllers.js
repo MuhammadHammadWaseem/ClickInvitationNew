@@ -3104,7 +3104,7 @@ sampleApp.controller("GueststablesCtrl", [
 
       // Check if the guest matches the search term
       let matchesGuest = safeToLowerCase(guest.name).includes(searchTerm) || 
-                         safeToLowerCase(guest.mealName).includes(searchTerm) ||
+                        //  safeToLowerCase(guest.mealName).includes(searchTerm) ||
                          safeToLowerCase(guest.id_guest).includes(searchTerm) ||
                          safeToLowerCase(guest.parent_id_guest).includes(searchTerm);
 
