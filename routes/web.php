@@ -235,6 +235,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/show-guests-attending', 'GuestController@showguestsAttending');
 	Route::post('/show-guests-notconfirm', 'GuestController@showguestsNotConfim');
 	Route::post('/show-guests-notopen', 'GuestController@showguestsNotOpen');
+	Route::post('/show-guests-opened', 'GuestController@showguestsOpened');
 	Route::post('/show-guests-for-admin', 'GuestController@showguestsforadmin');
 	Route::post('/all-guests', 'GuestController@allguests');
 	Route::post('/all-guests-not-nested', 'GuestController@allguestsnotnested');

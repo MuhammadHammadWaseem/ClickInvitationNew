@@ -1581,6 +1581,38 @@ sampleApp.controller("GuestslistCtrl", [
         });
       });
     };
+    $scope.guestlistOpened = function () {
+      $http({
+        method: "POST",
+        url: "/show-guests-opened",
+        data: { idevent: window.location.pathname.split("/")[2] },
+      }).then(function (response) {
+        $scope.guests = response.data;
+        $scope.tot = 0;
+        $scope.totm = 0;
+        $scope.totg = 0;
+        $scope.totcheckedin = 0;
+        $scope.totdeclined = 0;
+        $scope.totattending = 0;
+        $scope.membersNumber = 0;
+        angular.forEach($scope.guests, function (value, key) {
+          var nm = 0;
+          angular.forEach($scope.guests[key].members, function (value2, key2) {
+            if ($scope.guests[key].members[key2].checkin) $scope.totcheckedin++;
+            if ($scope.guests[key].members[key2].declined) $scope.totdeclined++;
+            if ($scope.guests[key].members[key2].opened == null) $scope.tot++;
+            if ($scope.guests[key].members[key2].opened == null) $scope.totm++;
+            if ($scope.guests[key].members[key2].opened == null) $scope.membersNumber++;
+            nm++;
+          });
+          $scope.guests[key].nummembers = nm;
+          if ($scope.guests[key].checkin) $scope.totcheckedin++;
+          if ($scope.guests[key].declined) $scope.totdeclined++;
+          if ($scope.guests[key].opened == null) $scope.tot++;
+          if ($scope.guests[key].opened == null) $scope.totg++;
+        });
+      });
+    };
 
     $scope.exportall = function () {
       var currentDate = new Date();
@@ -1761,6 +1793,8 @@ sampleApp.controller("GuestslistCtrl", [
             $scope.AtoZ();
           }else if (urlData[5] == "z-to-a") {
             $scope.ZtoA();
+          }else if (urlData[5] == "opened") {
+            $scope.guestlistOpened();
           }
         } else {
           $scope.guestlist();
@@ -1779,6 +1813,8 @@ sampleApp.controller("GuestslistCtrl", [
         $scope.AtoZ();
       }else if (urlData[4] == "z-to-a") {
         $scope.ZtoA();
+      }else if (urlData[4] == "opened") {
+        $scope.guestlistOpened();
       }
 
       //console.log(urlData[4]);

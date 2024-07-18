@@ -76,6 +76,10 @@ sampleApp.config(['$routeProvider', '$locationProvider',
         templateUrl: '/templates/guests-list-not-open.html',
         controller: 'GuestslistCtrl',
       }).
+      when('/guests-list/opened', {
+        templateUrl: '/templates/guests-list-opened.html',
+        controller: 'GuestslistCtrl',
+      }).
       when('/guests-list/fr/declined', {
         templateUrl: '/templates/fr/guests-list-declined.html',
         controller: 'GuestslistCtrl',

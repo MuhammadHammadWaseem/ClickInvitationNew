@@ -488,6 +488,50 @@ class GuestController extends Controller
         return $guests;
     }
 
+    public function showguestsOpened(Request $request)
+    {
+        $guests = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 1)->where('opened', 1)->where('id_meal', null)->get();
+
+        foreach ($guests as $g) {
+            $NotConfim = 0;
+            $g->members = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 0)->where('parent_id_guest', $g->id_guest)->whereNull('opened')->get();
+
+            if ($g->opened) {
+
+                $g->NotConfim = 1;
+            } else {
+                $g->NotConfim = 0;
+            }
+
+            foreach ($g->members as $gm) {
+                if ($gm->opened) {
+
+                    $gm->NotConfim = 1;
+                } else {
+                    $gm->NotConfim = 0;
+                }
+
+                if ($gm->id_meal != 0)
+                    $gm->meal = \App\Meal::where('id_meal', $gm->id_meal)->first();
+            }
+
+
+            foreach ($g->members as $gm) {
+                if ($gm->id_table != 0)
+                    $gm->table = \App\Table::where('id_table', $gm->id_table)->first();
+            }
+        }
+        foreach ($guests as $g) {
+            if ($g->id_meal != 0)
+                $g->meal = \App\Meal::where('id_meal', $g->id_meal)->first();
+        }
+        foreach ($guests as $g) {
+            if ($g->id_table != 0)
+                $g->table = \App\Table::where('id_table', $g->id_table)->first();
+        }
+        return $guests;
+    }
+
     /**
      * Effettua login.
      *
