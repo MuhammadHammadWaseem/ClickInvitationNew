@@ -1313,6 +1313,36 @@ sampleApp.controller("GuestslistCtrl", [
       });
     };
 
+    $scope.myfilterCustom = function (guest) {
+        // Search text from the input field
+        const searchText = $scope.myfilter || '';
+
+        // Helper function to safely check if a property contains the search text
+        function containsText(property) {
+            return property && property.toLowerCase().includes(searchText.toLowerCase());
+        }
+      
+        // Check if the guest's name matches the search text
+        if (containsText(guest.name)) {
+            return true;
+        }
+      
+        // Ensure guest.members is defined and is an array before iterating over it
+        if (Array.isArray(guest.members)) {
+            for (let i = 0; i < guest.members.length; i++) {
+                const member = guest.members[i];
+                if (containsText(member.name)) {
+                    return true;
+                }
+            }
+        }
+      
+        // If no match found, return false
+        return false;
+    };
+  
+  
+
     $scope.guestlistDeclined = function () {
       $http({
         method: "POST",

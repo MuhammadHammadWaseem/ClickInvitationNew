@@ -432,6 +432,8 @@ display: none;
 						ng-style="{ background: g.selected ? 'orange' : '#ebebeb', color: g.selected ? 'white' : '#939191' }">
 						<div class="col">{{g.name}}</div>
 						<div class="col">{{ g.mealName }}</div>
+						<div class="col" ng-show="g.parent_id_guest == 0">-</div>
+						<div class="col" ng-show="g.parent_id_guest != 0">( {{ getMainGuestName(g.parent_id_guest) }} )</div>
 						<!-- <div class="col">{{g.email}}</div> -->
 						<div ng-show="g.tablename" class="col text-danger">Seated on table {{g.tablename}}</div>
 						<div ng-hide="g.tablename" class="col text-success">Not Seated</div>
