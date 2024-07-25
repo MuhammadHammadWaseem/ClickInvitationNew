@@ -3576,7 +3576,10 @@ sampleApp.controller("PhotosCtrl", [
           text: "Photo deleted successfully",
           confirmButtonText: "OK"
         })
-        $scope.guestlist();
+        // $scope.guestlist();
+        if($scope.guestlist){
+          $scope.guestlist();
+        }
         $scope.url =
           "/website/" + $scope.idevent + "?id=" + new Date().getTime();
         $scope.showevent();
