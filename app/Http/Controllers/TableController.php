@@ -306,10 +306,54 @@ class TableController extends Controller
                 $t->mea=$allmeals;
             }
 
-            $totguests=\App\Guest::where('id_event',$request->route('idevent'))->where(function ($query) {
-                return $query->whereNull('declined')
-                      ->orwhere('declined', '=', 0);
-            })->count();
+            // $totguests=\App\Guest::where('id_event',$request->route('idevent'))->where(function ($query) {
+            //     return $query->whereNull('declined')
+            //           ->orwhere('declined', '=', 0);
+            // })->count();
+            
+            // $totguests=\App\Guest::where('id_event',$request->route('idevent'))->where('opened', '=', 2)->count();
+
+            $totm = \App\Guest::where('id_event', $request->route('idevent'))
+                ->where(function($query) {
+                    $query->where('checkin', 1)
+                          ->whereNull('declined')
+                          ->where(function($subQuery) {
+                              $subQuery->whereNotNull('id_meal')
+                                       ->orWhere('opened', 2);
+                          })
+                          ->orWhere(function($subQuery) {
+                              $subQuery->where(function($subSubQuery) {
+                                  $subSubQuery->where('opened', 2)
+                                              ->orWhereNotNull('id_meal');
+                              })
+                              ->whereNull('declined');
+                          });
+                })
+                ->count();
+            
+            $totg = \App\Guest::where('id_event', $request->route('idevent'))
+                ->where(function($query) {
+                    $query->where('checkin', 1)
+                          ->whereNull('declined')
+                          ->where(function($subQuery) {
+                              $subQuery->whereNotNull('id_meal')
+                                       ->orWhere('opened', 2);
+                          })
+                          ->orWhere(function($subQuery) {
+                              $subQuery->where(function($subSubQuery) {
+                                  $subSubQuery->where('opened', 2)
+                                              ->orWhereNotNull('id_meal');
+                              })
+                              ->whereNull('declined');
+                          });
+                })
+                ->count();
+            
+            $totguests = $totg;
+
+
+
+
             $totguestseated=\App\Guest::where('id_event',$request->route('idevent'))->where('id_table','<>',0)->count();
             $totfrees=$totguests-$totguestseated;
 
