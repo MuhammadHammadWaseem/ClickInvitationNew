@@ -1298,17 +1298,17 @@ display: none;
     setTimeout(showTooltip, 1000);
 
 
-    var Tawk_API = Tawk_API || {},
-        Tawk_LoadStart = new Date();
-    (function () {
-        var s1 = document.createElement("script"),
-            s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/6603116da0c6737bd1251e52/1hptvo5j7';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        s0.parentNode.insertBefore(s1, s0);
-    })();
+    // var Tawk_API = Tawk_API || {},
+    //     Tawk_LoadStart = new Date();
+    // (function () {
+    //     var s1 = document.createElement("script"),
+    //         s0 = document.getElementsByTagName("script")[0];
+    //     s1.async = true;
+    //     s1.src = 'https://embed.tawk.to/6603116da0c6737bd1251e52/1hptvo5j7';
+    //     s1.charset = 'UTF-8';
+    //     s1.setAttribute('crossorigin', '*');
+    //     s0.parentNode.insertBefore(s1, s0);
+    // })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
