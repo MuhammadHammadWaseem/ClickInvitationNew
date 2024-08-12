@@ -161,7 +161,7 @@ display: none;
 							</div>
 							<form action="/save-images" method="post" enctype="multipart/form-data" id="galleryform">
 							<div class="modal-body">
-									<input type="file" id="gall" style="display: block !important;" name="gall" />
+									<input type="file" id="gall" style="display: block !important;" name="gall[]" multiple accept="image/*" />
 									<input type="hidden" name="_token" id="csrf">
 									<input type="hidden" name="idevent" value="{{idevent}}" />
 								</div>

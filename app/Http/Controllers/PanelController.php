@@ -824,22 +824,21 @@ class PanelController extends Controller
                 }
                 // dd($request->file('gall'), $request->idevent, $request->guestCode);
 
-                // foreach ($request->file('gall') as $photo) {
+                foreach ($request->file('gall') as $photo) {
                 // dd($request->file('gall'));
-                // if ($photo->isValid()) {
+                if ($photo->isValid()) {
                 $photogallery = new \App\Photogallery;
                 $photogallery->id_event = $request->idevent;
                 $photogallery->guestCode = $request->guestCode ?? null;
                 $photogallery->save();
 
-                $fileName = $request->file('gall')->getClientOriginalName();
-                $request->file('gall')->move(public_path('event-images/' . $request->idevent . '/photogallery'), $photogallery->id_photogallery . ".jpg");
-                // }
-                // }
+                $fileName = $photo->getClientOriginalName();
+                $photo->move(public_path('event-images/' . $request->idevent . '/photogallery'), $photogallery->id_photogallery . ".jpg");
+                }
+                }
 
                 return redirect()->back();
             }
-
 
             return redirect()->back();
         } else
