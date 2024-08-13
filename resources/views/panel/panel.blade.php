@@ -76,16 +76,17 @@
                                 <label for="eventtitle"
                                     class="form-label">{{ __('panel.Event title (max 25 characters)') }}</label>
                                 <input type="text" class="form-control" ng-model="eventtitle"
-                                    aria-describedby="emailHelp">
+                                    aria-describedby="emailHelp" id="eventtitle" required>
                             </div>
                             <div class="mb-3">
                                 <label for="eventdate" class="form-label">{{ __('panel.Date') }}</label>
-                                <input type="datetime-local" class="form-control" ng-model="eventdate">
+                                <input type="datetime-local" class="form-control" id="eventdate" ng-model="eventdate" required>
                             </div>
                             <div class="mb-3">
                                 <label for="eventtype" class="form-label">{{ __('panel.Event type') }}</label>
 
-                                <select class="form-select" ng-model="eventtype">
+                                <select class="form-select" ng-model="eventtype" id="eventtype" required>
+                                    <option selected disabled value="">Please select event type</option>
                                     {{-- <option value="">{{ __('panel.Select event type') }}</option>
                                     <option value="WEDDING">{{ __('panel.WEDDING') }}</option>
                                     <option value="BABY-SHOWER">{{ __('panel.BABY-SHOWER') }}</option>
@@ -162,6 +163,22 @@
         }
     </style>
     <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const saverButton = document.getElementById("saver");
+            const eventForm = document.getElementById("event-form");
+            const eventTitle = document.getElementById("eventtitle");
+            const eventDate = document.getElementById("eventdate");
+            const eventType = document.getElementById("eventtype");
+        
+            saverButton.disabled = true;
+
+            
+            eventForm.addEventListener('input', function() {
+                saverButton.disabled = !(eventTitle.value && eventDate.value && eventType.value);
+            });
+        });
+
         var eventApp = angular.module('eventApp', ['ngRoute', 'ngAnimate', 'ui.sortable']);
         /*
         |
@@ -187,8 +204,7 @@
             });
 
             $scope.newevent = function() {
-                $('#exampleModal').modal('hide');
-
+                
                 $http({
                     method: 'POST',
                     url: '/new-event',
@@ -204,9 +220,15 @@
                         url: '/myevents',
                         data: {},
                     }).then(function(response) {
-
                         $scope.events = response.data;
+                        $('#exampleModal').modal('hide');
+                        // Reset form fields
+                        $scope.eventtitle = '';
+                        $scope.eventdate = '';
+                        $scope.eventtype = '';
 
+                        // Optionally, reset form input states
+                        document.getElementById("event-form").reset();
                     });
                 });
             }
