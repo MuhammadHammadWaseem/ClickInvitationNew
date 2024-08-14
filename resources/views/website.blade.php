@@ -37,7 +37,7 @@
 
     <section id="start" class="main"
         style="background-image: url('{{ $event->mainimage }}?id=<?php echo mt_rand(1, 100000); ?>'); background-position: center;background-size: cover">
-        <div class="names" style="margin-top: -200px !important">
+        <div class="names" style="margin-top: -136px !important">
             @if ($eventType)
             @if ($eventType->couple_event)
                 <div class="bridename">
