@@ -454,6 +454,17 @@ display: none;
                 <button class="btn pdfbtncolor" id="downloadBtn3">Download PDF</button>
             </div>
 
+            <div class="col-auto" style="padding: 0%; margin: 0%;">
+                 <label for="uploadStamp" class="btn topbtns">+ Upload Stamp
+                     <input type="file" style="display: none;" id="uploadStamp" onchange="uploadStamp(event)" accept="image/*">
+                 </label>
+            </div>
+
+            <div class="col-auto" style="padding: 0%; margin: 0%;">
+            <button class="btn pdfbtncolor" id="undoBtn" onclick="undo()">Undo</button>
+            <button class="btn pdfbtncolor" id="redoBtn" onclick="redo()">Redo</button>
+            </div>
+
             <!-- <div class="col-auto">
 
                 <button onclick="switchToOld()" class="btn pdfbtncolor" id="switch">Switch to Old version</button>
@@ -468,6 +479,19 @@ display: none;
 
                 <button onclick="dublicateObject()" class="btn pdfbtncolor">Duplicate</button>
             </div>
+
+            <div class="col-auto" style="padding: 0%; margin: 0%;">
+        <label for="two_sided" class="btn topbtns">Two Sided Card</label>
+        <input type="checkbox" name="two_sided" id="two_sided" onchange="toggleTwoSided(this)">
+    </div>
+
+<div class="col-auto" id="frontBackBox2" style="display: none;padding: 0%; margin: 0%;">
+    <label for="front" class="btn topbtns">Edit Front</label>
+    <input type="radio" name="edit" id="front" onchange="toggleSide(this)">
+    <label for="back" class="btn topbtns">Edit Back</label>
+    <input type="radio" name="edit" id="back" onchange="toggleSide(this)">
+</div>
+
         </div>
 
     </div>

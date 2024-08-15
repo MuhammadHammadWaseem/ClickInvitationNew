@@ -2596,9 +2596,11 @@ function GetAnimations() {
         if (response.card.two_sided == 1) {
           document.getElementById("two_sided").checked = true;
           document.getElementById("frontBackBox").style.display = "block";
+          document.getElementById("frontBackBox2").style.display = "block";
         } else {
           document.getElementById("two_sided").checked = false;
           document.getElementById("frontBackBox").style.display = "none";
+          document.getElementById("frontBackBox2").style.display = "none";
         }
         var HTML = document.getElementById("animationModalBody");
         HTML.innerHTML = "";
@@ -3039,12 +3041,14 @@ function loadCanvasState() {
 function toggleTwoSided(element) {
   if (element.checked === true) {
     document.getElementById("frontBackBox").style.display = "block";
+    document.getElementById("frontBackBox2").style.display = "block";
   } else {
     document.getElementById("back").checked = false;
 
     console.log("unchecked two sided");
     handleJSONImport();
     document.getElementById("frontBackBox").style.display = "none";
+    document.getElementById("frontBackBox2").style.display = "none";
   }
   var formData = new FormData();
   formData.append('_token', this.token);
