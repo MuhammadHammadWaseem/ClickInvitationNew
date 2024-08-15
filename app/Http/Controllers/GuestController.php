@@ -380,6 +380,10 @@ class GuestController extends Controller
                     break;
                 }
             }
+            foreach ($g->members as $gm) {
+                if ($gm->id_meal != 0)
+                    $gm->meal = \App\Meal::where('id_meal', $gm->id_meal)->first();
+            }
 
             // Update properties for the main guest
             $g->isDeclined = $g->checkin;
