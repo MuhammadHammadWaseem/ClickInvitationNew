@@ -24,12 +24,13 @@ class WebsiteController extends Controller
     {
         $event=\App\Event::where('id_event',$request->route('idevent'))->first();
         $photogallery=\App\Photogallery::where('id_event',$request->route('idevent'))->get();
+        $videogallery=\App\Videogallery::where('id_event',$request->route('idevent'))->paginate(4);
         //return $event; 
         $eventType = DB::table('event_type')->where(['id_eventtype' => $event->type_id])->first();
 
         
 
-		if($event) return view('website')->with('event', $event)->with('photogallery', $photogallery)->with('eventType', $eventType);
+		if($event) return view('website')->with('event', $event)->with('photogallery', $photogallery)->with('eventType', $eventType)->with('videogallery', $videogallery);
 		else return redirect('/');
     }
 
@@ -135,7 +136,8 @@ class WebsiteController extends Controller
     {
         $event=\App\Event::where('id_event',$request->route('id'))->first();
         $photogallery=\App\Photogallery::where('id_event',$request->route('id'))->get();
+        $videogallery=\App\Videogallery::where('id_event',$request->route('id'))->get();
         $eventType = DB::table('event_type')->where(['id_eventtype' => $event->type_id])->first();
-        return view('showGallery')->with('event', $event)->with('photogallery', $photogallery)->with('eventType', $eventType);
+        return view('showGallery')->with('event', $event)->with('photogallery', $photogallery)->with('eventType', $eventType)->with('videogallery', $videogallery);
     }
 }

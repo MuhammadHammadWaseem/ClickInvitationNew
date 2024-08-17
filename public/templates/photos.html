@@ -5,8 +5,10 @@
 			<div class="card mb-4">
 				<h4 class="card-header text-center"><i class="fal fa-camera-alt"></i> PHOTOS</h4>
 				<div class="card-body">
-					<h6 class="card-subtitle mb-2 text-muted">Here is the photo gallery you want to show your guests before and after the event.<br>
-						<strong>You can send a thank you e-mail to all your guest and remind them to come back here to see and download their pictures.</strong>
+					<h6 class="card-subtitle mb-2 text-muted">Here is the photo gallery you want to show your guests
+						before and after the event.<br>
+						<strong>You can send a thank you e-mail to all your guest and remind them to come back here to
+							see and download their pictures.</strong>
 					</h6>
 				</div>
 			</div>
@@ -18,7 +20,8 @@
 					<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 						<div class="carousel-inner">
 							<div class="carousel-item" ng-class='{active:$first}' ng-repeat="photo in galleries">
-								<img ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg" class="d-block w-100">
+								<img ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg"
+									class="d-block w-100">
 							</div>
 
 							<!--<div class="carousel-item">
@@ -28,15 +31,17 @@
 								<img src="https://picsum.photos/1298/649?grayscale" class="d-block w-100">
 							</div>-->
 						</div>
-						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+						<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+							data-bs-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Previous</span>
 						</button>
-						<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+						<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+							data-bs-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Next</span>
 						</button>
-					</div>				
+					</div>
 				</div>
 			</div>
 		</div>
@@ -53,40 +58,117 @@
 						<input id="gallerymput" type='file' ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" multiple />						
 					</div> -->
 
-					<button data-bs-toggle="modal" data-bs-target="#photogalleryModal" class="btn btn-success">ADD PHOTOS</button>
+					<button data-bs-toggle="modal" data-bs-target="#photogalleryModal" class="btn btn-success">ADD
+						PHOTOS</button>
+					<button class="btn btn-success" id="generateqrcode">Generate QR Code</button>
 
 					<div id="photogalleryModal" tabindex="-1" class="modal" tabindex="-1">
 						<div class="modal-dialog">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h5 class="modal-title">Add Photos</h5>
-							  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Add Photos</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<form action="/save-images" method="post" enctype="multipart/form-data"
+									id="galleryform">
+									<div class="modal-body">
+										<input type="file" id="gall" style="display: block !important;" name="gall[]"
+											multiple accept="image/*" />
+										<input type="hidden" name="_token" id="csrf">
+										<input type="hidden" name="idevent" id="idevent">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Close</button>
+										<button type="submit" id="submitPhoto" class="btn btn-success">Submit</button>
+									</div>
+								</form>
 							</div>
-							<form action="/save-images" method="post" enctype="multipart/form-data" id="galleryform">
-							<div class="modal-body">
-									<input type="file" id="gall" style="display: block !important;" name="gall[]" multiple accept="image/*" />
-									<input type="hidden" name="_token" id="csrf">
-									<input type="hidden" name="idevent" id="idevent">
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary">Submit</button>
-								</div>
-							</form>
-						  </div>
 						</div>
-					  </div>
+					</div>
 					<div class="row">
 						<div class="col-12 col-lg-4 col-md-6" ng-repeat="photo in galleries">
 							<div class="photo">
-								<img style="width: 100%;" class="thumb" ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg"/>
-								<button ng-click="delphotogallery(photo.id_photogallery);"><i class="far fa-times-circle"></i></button>
+								<img style="width: 100%;" class="thumb"
+									ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg" />
+								<button ng-click="delphotogallery(photo.id_photogallery);"><i
+										class="far fa-times-circle"></i></button>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
+
+		<!-- VIDEO -->
+		<div class="col-12 col-md-9 mt-5 photogallery">
+			<div class="card mb-4">
+				<div id="messages"></div>
+				<h5 class="card-header text-center">VIDEOGALLERY</h5>
+				<div class="card-body">
+					<button data-bs-toggle="modal" data-bs-target="#videogalleryModal" class="btn btn-success">ADD
+						VIDEOS</button>
+
+					<div id="videogalleryModal" tabindex="-1" class="modal" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Add Videos</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<form action="/save-images" method="post" enctype="multipart/form-data" id="videoform">
+									<div class="modal-body">
+										<input type="file" id="vid" style="display: block !important;" name="vid"
+											accept="video/*" />
+										<input type="hidden" name="_token" id="csrf2">
+										<input type="hidden" name="idevent" id="idevent2">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-success">Submit</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-4 col-md-6" ng-repeat="photo in videogalleries">
+							<div class="photo">
+								<video width="300" height="200" controls>
+									<source src="/event-images/{{ photo.id_event }}/videos/{{ photo.video }}"
+										type="video/mp4">
+									Your browser does not support the video tag.
+								</video>
+								<button ng-click="delvideogallery(photo.id);"><i
+										class="far fa-times-circle"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="qrModal" tabindex="-1" class="modal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Download QR Code</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center p-5">
+						<div id="qrcode"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- VIDEO -->
 
 	</div>
 
@@ -103,4 +185,57 @@
 <script>
 	var idevent = window.location.pathname.split("/")[2];
 	document.getElementById("idevent").value = idevent;
+	document.getElementById("idevent2").value = idevent;
+
+	$(document).ready(function () {
+		$('#videoform').on('submit', function (e) {
+			e.preventDefault();
+
+			let formData = new FormData(this);
+
+			$.ajax({
+				type: 'POST',
+				url: '/save-videos',
+				data: formData,
+				contentType: false,
+				processData: false,
+				success: function (response) {
+					$('#messages').html('<div class="alert alert-success alert-dismissible fade show">' + response.success + '</div>');
+					$('#videogalleryModal').modal('hide');
+					$("#videoform")[0].reset();
+					setTimeout(function () {
+						window.location.reload();
+					}, 1000);
+				},
+				error: function (xhr) {
+					let errorMessage = xhr.responseJSON.error || 'An error occurred. Please try again.';
+					$('#messages').html('<div class="alert alert-danger alert-dismissible fade show">' + errorMessage + '</div>');
+					$('#videogalleryModal').modal('hide');
+					$("#videoform")[0].reset();
+				}
+			});
+		});
+
+		$("#generateqrcode").click(function () {
+			$.ajax({
+				type: 'POST',
+				url: '/photos-qrCode/' + idevent,
+				data: {
+					"_token": $("#csrf").val()
+				},
+				success: function (response) {
+					$('#qrModal').modal('show');
+					$("#qrcode").empty();
+					$("#qrcode").append(`
+						<img src="${response.image}" alt="QR Code" /> 
+						<br />
+						<a id="downloadLink" href="${response.image}" download="qrcode.png" class="btn btn-success mt-3">Download QR Code</a>
+					`);
+				},
+				error: function (xhr) {
+					console.log(xhr.responseText);
+				}
+			});
+		});
+	});
 </script>

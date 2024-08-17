@@ -75,6 +75,7 @@ Route::get('/attending/{cardId}/{guestcode}/{lang}', 'OperationController@attend
 Route::get('/gift-suggestion/{cardId}/{guestcode}/{lang}', 'OperationController@giftsuggestion');
 Route::get('/check-in/{cardId}/{guestcode}/{lang}', 'OperationController@checkin');
 Route::get('/add-photos/{cardId}/{guestcode}/{lang}', 'OperationController@addphotos');
+Route::get('/add-photos-all/{id}', 'OperationController@addphotosall');
 Route::get('/add-photos/ack/{cardId}/{guestcode}/{lang}', 'OperationController@addphotosack');
 Route::get('/sorry-cant/{cardId}/{guestcode}/{lang}', 'OperationController@sorrycant');
 Route::get('/show-gifts/{cardId}/{guestcode}/{lang}', 'OperationController@showgifts');
@@ -101,6 +102,9 @@ Route::post('/send-messaging-whatsapp', 'MessagingController@sendmessagingwhatsa
 
 Route::post('/show-event', 'PanelController@showevent');
 Route::post('/save-images', 'PanelController@saveimages')->name('save.images');
+Route::post('/save-videos', 'PanelController@savevideos')->name('save.videos');
+Route::post('/photos-qrCode/{id}', 'PanelController@photosqr')->name('photos.qrCode');
+Route::post('/save-videogallery', 'PanelController@savevideogallery')->name('save.videogallery');
 Route::post('/decline', 'PanelController@decline');
 Route::post('/show-opguests', 'GuestController@showopguests');
 Route::post('/change-check', 'GuestController@changecheck');
@@ -195,6 +199,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/show-images', 'PanelController@showimages');
 
 	Route::post('/del-photogallery', 'PanelController@delphotogallery');
+	Route::post('/del-videogallery', 'PanelController@delvideogallery');
 
 	Route::post('/send-invitations', 'TwilioController@sendinvitations');
 

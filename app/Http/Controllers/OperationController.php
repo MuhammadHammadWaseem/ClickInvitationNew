@@ -120,6 +120,27 @@ class OperationController extends Controller
         } else
             return redirect('/');
     }
+    public function addphotosall($id)
+    {
+
+        $guest = \App\Guest::where('id_event', $id)->first();
+        if ($guest) {
+
+            $lang = Session('applocale');
+
+            if (array_key_exists($lang, Config::get('languages'))) {
+                Session::put('applocale', $lang);
+            }
+            App::setLocale($lang);
+
+            $event = \App\Event::where('id_event', $id)->first();
+            if ($event) {
+                return view('operations.addphotos')->with('guest', $guest)->with('event', $event)->with('ack', 0);
+            } else
+                return redirect('/');
+        } else
+            return redirect('/');
+    }
 
     /**
      * Effettua login.

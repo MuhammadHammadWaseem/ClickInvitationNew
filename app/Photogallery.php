@@ -8,7 +8,7 @@ class Photogallery extends Model
 {
 
     protected $fillable = [
-        'id_photogallery', 'id_event', 'url',
+        'id_photogallery', 'id_event', 'url','video',
     ];
 
     protected $table = 'photogallery';

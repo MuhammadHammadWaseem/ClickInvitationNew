@@ -39,31 +39,31 @@
         style="background-image: url('{{ $event->mainimage }}?id=<?php echo mt_rand(1, 100000); ?>'); background-position: center;background-size: cover">
         <div class="names" style="margin-top: -136px !important">
             @if ($eventType)
-            @if ($eventType->couple_event)
-                <div class="bridename">
-                    <p class="firstname">{{ $event->bridefname }}</p>
-                    <p class="secondname">{{ $event->bridelname }}</p>
-                </div>
-                <div class="and">
-                    <p>&</p>
-                </div>
+                @if ($eventType->couple_event)
+                    <div class="bridename">
+                        <p class="firstname">{{ $event->bridefname }}</p>
+                        <p class="secondname">{{ $event->bridelname }}</p>
+                    </div>
+                    <div class="and">
+                        <p>&</p>
+                    </div>
 
-                <div class="groomname">
-                    <p class="firstname">{{ $event->groomfname }}</p>
-                    <p class="secondname">{{ $event->groomlname }}</p>
-                </div>
+                    <div class="groomname">
+                        <p class="firstname">{{ $event->groomfname }}</p>
+                        <p class="secondname">{{ $event->groomlname }}</p>
+                    </div>
 
-                <div class="h">
-                    <hr>
-                    <i class="far fa-heart"></i>
-                    <hr>
-                </div>
-            @else
-                <div class="bridename">
-                    <p class="firstname">{{ $event->name }}</p>
-                    {{-- <p class="secondname">{{ $eventType->title }}</p> --}}
-                </div>
-            @endif
+                    <div class="h">
+                        <hr>
+                        <i class="far fa-heart"></i>
+                        <hr>
+                    </div>
+                @else
+                    <div class="bridename">
+                        <p class="firstname">{{ $event->name }}</p>
+                        {{-- <p class="secondname">{{ $eventType->title }}</p> --}}
+                    </div>
+                @endif
             @endif
             <div class="date">
                 <!-- <p>{{ \Carbon\Carbon::parse($event->date)->setTimezone('+2')->format('j F, Y H:i') }}</p> -->
@@ -82,11 +82,11 @@
             <div class="col-md-2">
                 <a href="#thecouple">
                     @if ($eventType)
-                    @if ($eventType->couple_event)
-                        THE COUPLE
-                    @else
-                        Description
-                    @endif
+                        @if ($eventType->couple_event)
+                            THE COUPLE
+                        @else
+                            Description
+                        @endif
                     @endif
                 </a>
                 <hr class="d-block d-md-none">
@@ -111,22 +111,22 @@
             <div class="col text-center">
                 <h1>
                     @if ($eventType)
-                    @if ($eventType->couple_event)
-                        THE COUPLE
-                    @else
-                        {{ $eventType->title }}
-                    @endif
+                        @if ($eventType->couple_event)
+                            THE COUPLE
+                        @else
+                            {{ $eventType->title }}
+                        @endif
                     @endif
                 </h1>
                 <h4 class="mt-4 mb-4">
 
 
                     @if ($eventType)
-                    @if ($eventType->couple_event)
-                        Meet the Bride & the Groom
-                    @else
-                        {{ $event->name }}
-                    @endif
+                        @if ($eventType->couple_event)
+                            Meet the Bride & the Groom
+                        @else
+                            {{ $event->name }}
+                        @endif
                     @endif
                 </h4>
                 <p>{{ $event->summary }}</p>
@@ -134,82 +134,83 @@
             </div>
         </div>
         @if ($eventType)
-        @if ($eventType->couple_event)
-            <div class="row mt-4">
-                <div class="col">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <!--<img src="https://picsum.photos/200/250?grayscale" class="img-fluid rounded-start">-->
-                                @if ($event->imggroom)
-                                    <img src="{{ $event->imggroom }}" class="img-fluid rounded-start">
-                                @endif
+            @if ($eventType->couple_event)
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <!--<img src="https://picsum.photos/200/250?grayscale" class="img-fluid rounded-start">-->
+                                    @if ($event->imggroom)
+                                        <img src="{{ $event->imggroom }}" class="img-fluid rounded-start">
+                                    @endif
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ $event->groomfname }} {{ $event->groomlname }}</h4>
+                                        <i>Groom</i>
+                                        <p class="card-text">{{ $event->groomsummary }}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ $event->groomfname }} {{ $event->groomlname }}</h4>
-                                    <i>Groom</i>
-                                    <p class="card-text">{{ $event->groomsummary }}</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    @if ($event->imgbride)
+                                        <img src="{{ $event->imgbride }}" class="img-fluid rounded-start">
+                                    @endif
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ $event->bridefname }} {{ $event->bridelname }}</h4>
+                                        <i>Bride</i>
+                                        <p class="card-text">{{ $event->bridesummary }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                @if ($event->imgbride)
-                                    <img src="{{ $event->imgbride }}" class="img-fluid rounded-start">
-                                @endif
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h4 class="card-title">{{ $event->bridefname }} {{ $event->bridelname }}</h4>
-                                    <i>Bride</i>
-                                    <p class="card-text">{{ $event->bridesummary }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+            @endif
         @endif
     </section>
 
     <div id="photogalleryModal" tabindex="-1" class="modal" tabindex="-1">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add Photos</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Photos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/save-images" method="post" enctype="multipart/form-data" id="galleryform">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <input type="file" id="gall" style="display: block !important;" name="gall" />
+                        <input type="hidden" name="idevent" value="{{ $event->id_event }}" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
-            <form action="/save-images" method="post" enctype="multipart/form-data" id="galleryform">
-                {{ csrf_field() }}
-            <div class="modal-body">
-                    <input type="file" id="gall" style="display: block !important;" name="gall" />
-                    <input type="hidden" name="idevent" value="{{ $event->id_event }}" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-          </div>
         </div>
-      </div>
+    </div>
 
-    
-    @if (!$photogallery->isEmpty())
-    <section id="gallery" class="container gallery">
-        <div class="row tit">
-            <div class="col text-center">
-                <h1>GALLERY</h1>
-                <h4 class="mt-4 mb-4">Check out the Candid Moments</h4>
-                <button data-bs-toggle="modal" data-bs-target="#photogalleryModal" class="btn btn-success">ADD PHOTOS</button>
-                <hr>
-            </div>
+
+    @if (!$photogallery->isEmpty() || !$videogallery->isEmpty())
+        <section id="gallery" class="container gallery">
+            <div class="row tit">
+                <div class="col text-center">
+                    <h1>GALLERY</h1>
+                    <h4 class="mt-4 mb-4">Check out the Candid Moments</h4>
+                    <button data-bs-toggle="modal" data-bs-target="#photogalleryModal" class="btn btn-success">ADD
+                        PHOTOS</button>
+                    <hr>
+                </div>
             </div>
 
             <div class="row">
@@ -240,6 +241,22 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+                </div>
+            </div>
+
+            {{-- VIDEO --}}
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center mt-3 mb-3">VIDEO</h1>
+                    <div>
+                        @foreach ($videogallery as $video)
+                        <video width="300" height="200" controls>
+                            <source src="/event-images/{{ $video->id_event }}/videos/{{ $video->video }}"
+                                type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        @endforeach
+                    </div>
                     <center>
                         <button class="btn btn-primary mt-3" id="viewall"><a
                                 class="text-white text-decoration-none" target="_blank"
@@ -247,6 +264,7 @@
                     </center>
                 </div>
             </div>
+            {{-- VIDEO --}}
 
         </section>
     @endif

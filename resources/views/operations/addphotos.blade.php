@@ -41,7 +41,8 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <img src="/assets/images/logo/logoNewGolden.png" width="200px" class="d-inline-block align-top" alt="">
+                <img src="/assets/images/logo/logoNewGolden.png" width="200px" class="d-inline-block align-top"
+                    alt="">
             </a>
         </div>
     </nav>
@@ -52,12 +53,31 @@
 
                 <div class="col-12">
                     @if (!$ack)
-                        <button style="font-size:13px; border: 0;background: rgba(0,0,0,0);" class="back" onclick="history.back()""><i
+                        <button style="font-size:13px; border: 0;background: rgba(0,0,0,0);" class="back"
+                            onclick="history.back()""><i
                                 class="fas fa-chevron-left"></i>{{ __('addphotos.BACK TO INVITATION') }}</button>
                     @else
-                        <button style="font-size:13px; border: 0;background: rgba(0,0,0,0);" class="back" onclick="history.back()""><i
+                        <button style="font-size:13px; border: 0;background: rgba(0,0,0,0);" class="back"
+                            onclick="history.back()""><i
                                 class="fas fa-chevron-left"></i>{{ __('addphotos.BACK TO INVITATION') }}</button>
                     @endif
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                
                     <div class="card mb-4">
                         <h4 class="card-header text-center"><i
                                 class="fal fa-camera-alt"></i>{{ __('addphotos.PHOTOS') }}</h4>
@@ -77,8 +97,7 @@
                                     <div class="carousel-item" ng-class='{active:$first}'
                                         ng-repeat="photo in galleries">
                                         <img ng-src="{{ env('APP_URL') }}/event-images/@{{ photo.id_event }}/photogallery/@{{ photo.id_photogallery }}.jpg"
-                                        height="700px"
-                                            class="d-block w-100">
+                                            height="700px" class="d-block w-100">
                                     </div>
 
                                     <!--<div class="carousel-item">
@@ -102,19 +121,22 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-12 mt-5 photogallery">
                     <div class="card mb-4">
                         <h5 class="card-header text-center">{{ __('addphotos.PHOTOGALLERY') }}</h5>
-                        <button data-bs-toggle="modal" data-bs-target="#photogalleryModal" class="btn btn-success btn-sm mt-3 w-25 ms-3">ADD PHOTOS</button>
-                        <div class="card-body" >
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button data-bs-toggle="modal" data-bs-target="#photogalleryModal"
+                                class="btn btn-success btn-sm mt-3 w-25 ms-5">ADD PHOTOS</button>
+                        </div>
+                        <div class="card-body">
                             {{-- <div class="photo" ng-show="index === 'MAIN'">
                                 <label class="btn btn-success" style="width:auto;" for="gallerymput">
                                     {{ __('addphotos.ADD PHOTOS') }} <i class="fal fa-camera"></i>
                                 </label> --}}
-                                {{-- <input id="gallerymput" type='file' ng-model-instant
+                            {{-- <input id="gallerymput" type='file' ng-model-instant
                                     onchange="angular.element(this).scope().imageUpload(event)" multiple /> --}}
-                                    {{-- <form action="{{ route('save.images') }}" method="POST" enctype="multipart/form-data" id="gallerymput">
+                            {{-- <form action="{{ route('save.images') }}" method="POST" enctype="multipart/form-data" id="gallerymput">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="idevent" value="{{ $event->id_event }}">
                                         <button type="submit" class="btn btn-success" >{{ __('addphotos.ADD PHOTOS') }}</button>
@@ -122,10 +144,10 @@
                                         <input type="file" class="form-control" style="display: block!important;" name="gall[]" multiple> 
                                 </form>
                             </div> --}}
-                            
+
                             {{-- <div class="photo" ng-show="index != 'MAIN'">
                                 <label class="" style="width:auto;padding: 15px;color: white;background: #8158ab;border: 0px;">
-                                    @{{index}}
+                                    @{{ index }}
                                     <svg style="width: 21px;" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                         <title></title>
                                         <g id="about" fill="#FFFFFF">
@@ -148,40 +170,100 @@
 
                             <div class="photo" ng-repeat="photo in galleries">
                                 <img class="thumb"
-                                    ng-src="/event-images/@{{photo.id_event}}/photogallery/@{{photo.id_photogallery}}.jpg"
+                                    ng-src="/event-images/@{{ photo.id_event }}/photogallery/@{{ photo.id_photogallery }}.jpg"
                                     height="75" />
                                 {{-- <button ng-click="delphotogallery(photo.id_photogallery);"><i
                                         class="far fa-times-circle"></i></button> --}}
                             </div>
-                            
 
-					        <div id="photogalleryModal" tabindex="-1" class="modal" tabindex="-1">
-					        	<div class="modal-dialog">
-					        	  <div class="modal-content">
-					        		<div class="modal-header">
-					        		  <h5 class="modal-title">Add Photos</h5>
-					        		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					        		</div>
-					        		<form action="/save-images" method="post" enctype="multipart/form-data" id="galleryform">
-                                        {{ csrf_field() }}
-					        		<div class="modal-body">
-					        				<input type="file" id="gall" style="display: block !important;" name="gall" />
-					        				{{-- <input type="hidden" name="_token" id="csrf"> --}}
-					        				<input type="hidden" name="idevent" value="{{ $event->id_event }}" />
-					        			</div>
-					        			<div class="modal-footer">
-					        				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					        				<button type="submit" class="btn btn-primary">Submit</button>
-					        			</div>
-					        		</form>
-					        	  </div>
-					        	</div>
-					          </div>
 
-                            
+                            <div id="photogalleryModal" tabindex="-1" class="modal" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Add Photos</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="/save-images" method="post" enctype="multipart/form-data"
+                                            id="galleryform">
+                                            {{ csrf_field() }}
+                                            <div class="modal-body">
+                                                <input type="file" id="gall"
+                                                    style="display: block !important;" name="gall[]" multiple
+                                                    accept="image/*" />
+                                                {{-- <input type="hidden" name="_token" id="csrf"> --}}
+                                                <input type="hidden" name="idevent"
+                                                    value="{{ $event->id_event }}" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+                {{-- video --}}
+                <div class="col-12 mt-5 photogallery">
+                    <div class="card mb-4">
+                        {{-- <h5 class="card-header text-center">{{ __('addphotos.PHOTOGALLERY') }}</h5> --}}
+                        <h5 class="card-header text-center">VIDEO GALLERY</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button data-bs-toggle="modal" data-bs-target="#videogalleryModal"
+                                class="btn btn-success btn-sm mt-3 w-25 ms-5">ADD VIDEO</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="photo" ng-repeat="photo in videogalleries">
+                                {{-- <img class="thumb"
+                                    ng-src="/event-images/@{{ photo.id_event }}/photogallery/@{{ photo.id_photogallery }}.jpg"
+                                    height="75" /> --}}
+                                <video width="300" height="200" controls>
+                                    <source src="/event-images/@{{ photo.id_event }}/videos/@{{ photo.video }}"
+                                        type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+
+                            <div id="videogalleryModal" tabindex="-1" class="modal" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Add Photos</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form action="/save-images" method="post" enctype="multipart/form-data"
+                                            id="galleryform">
+                                            {{ csrf_field() }}
+                                            <div class="modal-body">
+                                                <input type="file" id="vid"
+                                                    style="display: block !important;" name="vid"
+                                                    accept="video/*" />
+                                                <input type="hidden" name="idevent"
+                                                    value="{{ $event->id_event }}" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                {{-- video  --}}
 
             </div>
 
@@ -224,9 +306,10 @@
                     }).then(function(response) {
                         console.log(response);
                         $scope.galleries = response.data.photogallery;
+                        $scope.videogalleries = response.data.videogallery;
                         let data = response.data.photogallery;
                         $scope.count = 0;
-                        
+
                         console.log(data);
                         const nameArrays = {};
 

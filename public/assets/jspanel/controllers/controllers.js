@@ -3541,9 +3541,12 @@ sampleApp.controller("PhotosCtrl", [
         data: { idevent: window.location.pathname.split("/")[2] },
       }).then(function (response) {
         $scope.galleries = response.data.photogallery;
+        $scope.videogalleries = response.data.videogallery;
         $scope.csrf = response.data.csrfToken;
         document.getElementById('csrf').value = $scope.csrf;
-        document.getElementById('eventId').value = response.data.id_event;
+        document.getElementById('csrf2').value = $scope.csrf;
+        // document.getElementById('eventId2').value = response.data.id_event;
+        // document.getElementById('eventId').value = response.data.id_event;
       });
     };
 
@@ -3589,6 +3592,30 @@ sampleApp.controller("PhotosCtrl", [
           icon: "success",
           title: "Success",
           text: "Photo deleted successfully",
+          confirmButtonText: "OK"
+        })
+        // $scope.guestlist();
+        if($scope.guestlist){
+          $scope.guestlist();
+        }
+        $scope.url =
+          "/website/" + $scope.idevent + "?id=" + new Date().getTime();
+        $scope.showevent();
+      });
+    };
+    $scope.delvideogallery = function (id) {
+      $http({
+        method: "POST",
+        url: "/del-videogallery",
+        data: {
+          id: id,
+          idevent: window.location.pathname.split("/")[2],
+        },
+      }).then(function (response) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Video deleted successfully",
           confirmButtonText: "OK"
         })
         // $scope.guestlist();

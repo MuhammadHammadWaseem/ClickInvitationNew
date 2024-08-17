@@ -166,6 +166,7 @@ class PanelController extends Controller
         $event->serverDateNow = $current->format('Y-m-d H:i:s');
 
         $photogallery = \App\Photogallery::where('id_event', $request->idevent)->get();
+        $videogallery = \App\Videogallery::where('id_event', $request->idevent)->get();
 
         foreach ($photogallery as $photo) {
             if (strlen($photo->guestCode) > 0) {
@@ -177,6 +178,7 @@ class PanelController extends Controller
             }
         }
         $event->photogallery = $photogallery;
+        $event->videogallery = $videogallery;
         $event->isCouple = $eventType[0]->couple_event;
         $event->isCorporate = $eventType[0]->corporate_event;
         $event->csrfToken = $csrfToken;
@@ -836,14 +838,88 @@ class PanelController extends Controller
                 $photo->move(public_path('event-images/' . $request->idevent . '/photogallery'), $photogallery->id_photogallery . ".jpg");
                 }
                 }
+                if(count($request->file('gall')) > 2){
+                    session()->flash('success', 'Your Photos has been successfully uploaded! Enjoy the party!');
+                    return redirect()->back();
+                }else{
+                    session()->flash('success', 'Your Photo has been successfully uploaded! Enjoy the party!');
+                    return redirect()->back();
+                }
+            }
 
-                return redirect()->back();
+
+            // Validate video file if it exists
+            if ($request->hasFile('vid')) {
+                $video = $request->file('vid');
+                $maxSize = 15 * 1024 * 1024; // 15 MB in bytes
+
+                if ($video->getSize() > $maxSize) {
+                    return redirect()->back()->withErrors(['vid' => 'The video is too large to upload. Maximum size allowed is 15 MB.']);
+                }
+
+                if (!file_exists('public/event-images/' . $request->idevent . '/videos')) {
+                    mkdir('public/event-images/' . $request->idevent . '/videos', 0777, true);
+                }
+
+                $filename = time() . '.' . $video->getClientOriginalExtension();
+                $video->move(public_path('event-images/' . $request->idevent . '/videos'), $filename);
+
+                // Save the video path to the event
+
+                $videogallery = new \App\Videogallery;
+                $videogallery->id_event = $request->idevent;
+                $videogallery->guest_code = $request->guest_code ?? null;
+                $videogallery->video = $filename;
+                $videogallery->save();
+
+                return redirect()->back()->with('success', 'Your video has been successfully uploaded! Enjoy the party!');
             }
 
             return redirect()->back();
         } else
             return 0;
     }
+
+    public function savevideos(Request $request)
+    {
+        $event = \App\Event::where('id_event', $request->idevent)->first();
+        if ($event) {
+            // Validate video file if it exists
+            if ($request->hasFile('vid')) {
+                $video = $request->file('vid');
+                $maxSize = 15 * 1024 * 1024; // 15 MB in bytes
+
+                if ($video->getSize() > $maxSize) {
+                    return response()->json(['error' => 'The video is too large to upload. Maximum size allowed is 15 MB.'], 422);
+                }
+
+                if (!file_exists('public/event-images/' . $request->idevent . '/videos')) {
+                    mkdir('public/event-images/' . $request->idevent . '/videos', 0777, true);
+                }
+
+                $filename = time() . '.' . $video->getClientOriginalExtension();
+                $video->move(public_path('event-images/' . $request->idevent . '/videos'), $filename);
+
+                // Save the video path to the event
+
+                $videogallery = new \App\Videogallery;
+                $videogallery->id_event = $request->idevent;
+                $videogallery->guest_code = $request->guest_code ?? null;
+                $videogallery->video = $filename;
+                $videogallery->save();
+
+                return response()->json(['success' => 'Your video has been successfully uploaded!'], 200);
+            }
+
+            return redirect()->back();
+        } else
+        return response()->json(['error' => 'Event not found.'], 404);
+    }
+
+    public function savevideogallery(Request $request)
+    {
+        
+    } 
 
     private function saveRecImage($imageData, $eventId, $fileName)
     {
@@ -890,6 +966,27 @@ class PanelController extends Controller
             }
             return 1;
         }
+    }
+    public function delvideogallery(Request $request)
+    {
+        $photogallery = \App\Videogallery::where('id', $request->id)->first();
+        if ($photogallery && $photogallery->id_event == $request->idevent) {
+            // Convert to absolute path using public_path helper
+            $videoPath = public_path('event-images/' . $request->idevent . '/videos/' . $photogallery->video);
+
+            // Delete the record from the database
+            $photogallery->delete();
+
+            // Check if the file exists and delete it
+            if (file_exists($videoPath)) {
+                unlink($videoPath);
+                return response()->json(['success' => 'Video deleted successfully'], 200);
+            } else {
+                return response()->json(['error' => 'File does not exist'], 404);
+            }
+        }
+
+        return response()->json(['error' => 'Video not found or unauthorized action'], 404);
     }
 
 
@@ -2115,6 +2212,47 @@ class PanelController extends Controller
         return response()->json(['message' => 'Invitations sent successfully.']);
     }
 
+    // public function photosqr($id)
+    // {
+    //     // Include the QR code library
+    //     require_once base_path('app/Http/Controllers/phpqrcode/qrlib.php');
+    
+    //     // Generate the URL for the QR code
+    //     $url = url("/add-photos-all/{$id}");
+    
+    //     // Start output buffering to capture the QR code output
+    //     ob_start();
+    //     \QRcode::png($url, null, 'H', 4, 4);
+    //     $imageData = ob_get_contents();
+    //     ob_end_clean();
+    
+    //     // Define the headers for the response to force download
+    //     $headers = [
+    //         'Content-Type' => 'image/png',
+    //         'Content-Disposition' => 'attachment; filename="qr-code.png"',
+    //         'Content-Length' => strlen($imageData),
+    //     ];
+    
+    //     // Return the response with the image data and headers
+    //     return response($imageData, 200, $headers);
+    // }
+    public function photosqr($id)
+{
+    require_once base_path('app/Http/Controllers/phpqrcode/qrlib.php');
+
+    $url = url("/add-photos-all/{$id}");
+
+    ob_start();
+    \QRcode::png($url, null, 'H', 4, 4);
+    $imageData = ob_get_contents();
+    ob_end_clean();
+
+    $base64Image = base64_encode($imageData);
+
+    return response()->json([
+        'image' => 'data:image/png;base64,' . $base64Image
+    ]);
+}
 
 
 }
