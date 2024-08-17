@@ -57,29 +57,38 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-5">Images</h1>
-        <div class="row">
-            @foreach ($photogallery as $photo)
-            <div class="col-md-2 mb-4">
-                <a href="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg" class="gallery-image">
+        @if ($photogallery->count() > 0)
+            <h1 class="text-center mb-5">Images</h1>
+            <div class="row">
+                @foreach ($photogallery as $photo)
+                <div class="col-md-2 mb-4">
+                    <a href="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg" class="gallery-image">
                     <img src="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg" class="img-fluid" alt="Gallery Image">
                 </a>
             </div>
             @endforeach
+            <hr>
         </div>
-        
-        <h1 class="text-center mt-5 mb-5">Videos</h1>
+        @endif
+
+        @if ($videogallery->count() > 0)
+        <h1 class="text-center mt-3 mb-5">Videos</h1>
         <div class="row">
             @foreach ($videogallery as $video)
             <div class="col-md-4 mb-4">
                 <video width="300" height="200" controls>
                     <source src="/event-images/{{ $video->id_event }}/videos/{{ $video->video }}"
                         type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                        Your browser does not support the video tag.
+                    </video>
             </div>
             @endforeach
         </div>
+        @endif
+
+        @if ($photogallery->count() == 0 && $videogallery->count() == 0)
+        <h3 class="text-center mt-5">No images or videos found.</h3>
+        @endif
     </div>
 
     <!-- baguetteBox JavaScript -->
