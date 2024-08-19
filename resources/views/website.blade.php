@@ -188,7 +188,7 @@
                 <form action="/save-images" method="post" enctype="multipart/form-data" id="galleryform">
                     {{ csrf_field() }}
                     <div class="modal-body">
-                        <input type="file" id="gall" style="display: block !important;" name="gall" />
+                        <input type="file" id="gall" style="display: block !important;" name="gall[]" multiple accept="image/*" />
                         <input type="hidden" name="idevent" value="{{ $event->id_event }}" />
                     </div>
                     <div class="modal-footer">
