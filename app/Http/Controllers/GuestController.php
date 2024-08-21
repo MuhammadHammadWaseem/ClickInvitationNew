@@ -450,11 +450,11 @@ class GuestController extends Controller
 
     public function showguestsNotOpen(Request $request)
     {
-        $guests = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 1)->whereNull('opened')->get();
+        $guests = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 1)->whereNull('declined')->whereNull('opened')->get();
 
         foreach ($guests as $g) {
             $NotConfim = 0;
-            $g->members = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 0)->where('parent_id_guest', $g->id_guest)->whereNull('opened')->get();
+            $g->members = \App\Guest::where('id_event', $request->idevent)->where('mainguest', 0)->where('parent_id_guest', $g->id_guest)->whereNull('declined')->whereNull('opened')->get();
 
             if ($g->opened) {
 
@@ -935,7 +935,7 @@ class GuestController extends Controller
                 $guest->checkin = 0;
             else
                 $guest->checkin = 1;
-            $guest->opened = null;
+            // $guest->opened = null;
             $guest->save();
         }
         return 1;

@@ -1284,9 +1284,9 @@ sampleApp.controller("GuestslistCtrl", [
         url: "/show-guests",
         data: { idevent: window.location.pathname.split("/")[2] },
       }).then(function (response) {
-        $scope.guestlistCheckedIn();
-        $scope.guestlistAttending();
-        $scope.guestlistDeclined();
+        // $scope.guestlistCheckedIn();
+        // $scope.guestlistAttending();
+        // $scope.guestlistDeclined();
         $scope.guests = response.data;
         $scope.eventID = $scope.guests[0].id_event;
         $scope.tot = 0;
