@@ -1692,7 +1692,7 @@ sampleApp.controller("GuestslistCtrl", [
     };
 
     $scope.exportconfirmed = function () {
-      // $scope.guestlistAttending();
+      $scope.guestlistAttending();
       var currentDate = new Date();
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `confirmed_guest_list_${formattedDate}.csv`;
@@ -1732,7 +1732,7 @@ sampleApp.controller("GuestslistCtrl", [
 
 
     $scope.exportdeclined = function () {
-      // $scope.guestlistDeclined();
+      $scope.guestlistDeclined();
       var currentDate = new Date();
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `declined_guest_list_${formattedDate}.csv`;
@@ -1782,7 +1782,7 @@ sampleApp.controller("GuestslistCtrl", [
 
 
     $scope.exportcheckedin = function () {
-      // $scope.guestlistCheckedIn();
+      $scope.guestlistCheckedIn();
       var currentDate = new Date();
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `checkedin_guest_list_${formattedDate}.csv`;
