@@ -2738,22 +2738,63 @@ function dwnPDF() {
   link.click();
 }
 
-function loadBgImagesFromDB(imgData) {
+// function loadBgImagesFromDB(imgData) {
 
+//   let doc = document.getElementById("bgImgData");
+//   if (imgData.length > 0) {
+//     let tags = "";
+//     for (let i = 0; i < imgData.length; i++) {
+//       tags +=
+//         "<label class='borderPc py-2' >" +
+//         "<input type='radio' onclick='backgroundSelecetor(this.value)' name='test' class='bgName' value='" +
+//         imgData[i].img +
+//         "' id='" +
+//         imgData[i].img +
+//         "' >" +
+//         "<img src='https://clickadmin.searchmarketingservices.online/eventcards/" +
+//         imgData[i].img +
+//         "' alt='Option 1'  style='z-index: -10'>" +
+//         "</label>";
+//     }
+//     doc.innerHTML = tags;
+//   } else {
+//     doc.innerHTML = "";
+//   }
+// }
+function loadBgImagesFromDB(imgData) {
+  let selectedBackground;
+  $.ajax({
+    type: "GET",
+    url: "/event/get-card/" + window.location.pathname.split("/")[2],
+    success: function (data) {
+      console.log("datass", data.bgName);
+      selectedBackground = data.bgName;
+
+      // After the background data is retrieved, render the images and set the selected one
+      renderBgImages(imgData, selectedBackground);
+    },
+    error: function (xhr, status, error) {
+      console.log(error);
+    }
+  });
+}
+
+function renderBgImages(imgData, selectedBackground) {
   let doc = document.getElementById("bgImgData");
   if (imgData.length > 0) {
     let tags = "";
     for (let i = 0; i < imgData.length; i++) {
+      const isChecked = imgData[i].img === selectedBackground ? "checked" : "";
       tags +=
-        "<label class='borderPc py-2' >" +
+        "<label class='borderPc py-2'>" +
         "<input type='radio' onclick='backgroundSelecetor(this.value)' name='test' class='bgName' value='" +
         imgData[i].img +
         "' id='" +
         imgData[i].img +
-        "' >" +
+        "' " + isChecked + ">" +
         "<img src='https://clickadmin.searchmarketingservices.online/eventcards/" +
         imgData[i].img +
-        "' alt='Option 1'  style='z-index: -10'>" +
+        "' alt='Option 1' style='z-index: -10'>" +
         "</label>";
     }
     doc.innerHTML = tags;
@@ -2761,6 +2802,7 @@ function loadBgImagesFromDB(imgData) {
     doc.innerHTML = "";
   }
 }
+
 function updateCanvasHistory() {
   canvasHistory.push(canv.toJSON());
 }

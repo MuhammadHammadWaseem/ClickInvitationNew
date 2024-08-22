@@ -3534,6 +3534,20 @@ sampleApp.controller("PhotosCtrl", [
       }
     });
 
+    $scope.openModal = function (imgSrc) {
+      var modal = document.getElementById("myModal");
+      var modalImg = document.getElementById("img01");
+  
+      modal.style.display = "block";
+      modalImg.src = imgSrc;
+  };
+  
+  $scope.closeModal = function () {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "none";
+  };
+  
+
     $scope.showevent = function () {
       $http({
         method: "POST",

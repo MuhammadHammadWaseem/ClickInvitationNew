@@ -1,3 +1,56 @@
+<style>
+	/* The Modal (background) */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.9); 
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+</style>
 <div class="container webpage">
 	<div class="row justify-content-md-center">
 
@@ -91,7 +144,8 @@
 						<div class="col-12 col-lg-4 col-md-6" ng-repeat="photo in galleries">
 							<div class="photo">
 								<img style="width: 100%;" class="thumb"
-									ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg" />
+									ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg"
+									ng-click="openModal('/event-images/' + photo.id_event + '/photogallery/' + photo.id_photogallery + '.jpg')" />
 								<button ng-click="delphotogallery(photo.id_photogallery);"><i
 										class="far fa-times-circle"></i></button>
 							</div>
@@ -99,6 +153,13 @@
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+		    <span class="close" ng-click="closeModal()">&times;</span>
+		    <img class="modal-content" id="img01">
+		    <div id="caption"></div>
 		</div>
 
 		<!-- VIDEO -->
