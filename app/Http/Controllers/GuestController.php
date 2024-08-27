@@ -31,6 +31,7 @@ class GuestController extends Controller
 
             if ($count < $allowed->members_number) {
                 $guest = new \App\Guest;
+                $guest->titleGuest = $request->titleGuest;
                 $guest->name = $request->nameguest;
                 if ($request->has('emailguest'))
                     $guest->email = $request->emailguest;
@@ -65,6 +66,7 @@ class GuestController extends Controller
             }
         } else {
             $guest = new \App\Guest;
+            $guest->titleGuest = $request->titleGuest;
             $guest->name = $request->nameguest;
             if ($request->has('emailguest'))
                 $guest->email = $request->emailguest;
@@ -775,10 +777,10 @@ class GuestController extends Controller
      */
     public function editguest(Request $request)
     {
-
         $guest = \App\Guest::where('id_guest', $request->idguest)->first();
         if ($guest) {
             $guest->name = $request->nameguest;
+            $guest->titleGuest = $request->titleGuest;
             $guest->email = $request->emailguest;
             $guest->phone = $request->phoneguest;
             $guest->whatsapp = $request->whatsappguest;

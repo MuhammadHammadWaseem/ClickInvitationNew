@@ -725,7 +725,7 @@ display: none;
 						<div class="col-lg-6 col-md-12">
 							<button ng-click="guest.vis = !guest.vis" class="visualizer text-start">
 								<i ng-class="guest.vis ? 'fas fa-caret-down' : 'fas fa-caret-up'"></i>
-								<span>GROUP:</span><strong>{{guest.name}}</strong>
+								<span>GROUP:</span><strong>{{guest.titleGuest}} {{guest.name}}</strong>
 								<p ng-show="guest.nummembers < guest.members_number"><span class="text-success">OPEN</span>({{guest.nummembers}} of {{guest.members_number}} members)</p>
 								<p ng-hide="guest.nummembers < guest.members_number"><span class="text-danger">CLOSED</span>({{guest.nummembers}} of {{guest.members_number}} members)</p>
 							</button>
@@ -829,6 +829,36 @@ display: none;
 				</div>
 				<div class="modal-body">
 					<form id="ng" ng-submit="newguest();">
+						<div class="form-floating mb-2">
+							<select class="form-select" ng-model="ng.titleGuest" id="ngTitle">
+								<option selected disabled>Select Title</option>
+								<option value="Mr.">Mr.</option>
+								<option value="Mrs.">Mrs.</option>
+								<option value="Miss">Miss</option>
+								<option value="Ms.">Ms.</option>
+								<option value="Dr.">Dr.</option>
+								<option value="Prof.">Prof.</option>
+								<option value="Rev.">Rev.</option>
+								<option value="Hon.">Hon.</option>
+								<option value="Sir">Sir</option>
+								<option value="Dame">Dame</option>
+								<option value="Mr. & Mrs.">Mr. & Mrs.</option>
+								<option value="Mr. & Family">Mr. & Family</option>
+								<option value="Ms. & Family">Ms. & Family</option>
+								<option value="Dr. & Mrs.">Dr. & Mrs.</option>
+								<option value="Capt.">Capt.</option>
+								<option value="Maj.">Maj.</option>
+								<option value="Col.">Col.</option>
+								<option value="Gen.">Gen.</option>
+								<option value="Lt.">Lt.</option>
+								<option value="Sgt.">Sgt.</option>
+								<option value="Lord">Lord</option>
+								<option value="Lady">Lady</option>
+								<option value="Duke">Duke</option>
+								<option value="Duchess">Duchess</option>
+							</select>
+							<label for="ngTitle">Title</label>
+						</div>
 						<div class="form-floating mb-2">
 							<input type="text" class="form-control" ng-model="ng.nameguest" placeholder="Name" required
 								id="ng1" ng-change="checkrepeat();">
@@ -1017,6 +1047,35 @@ display: none;
 				</div>
 				<div class="modal-body">
 					<form id="eg" ng-submit="editguest();">
+						<div class="form-floating mb-2">
+							<select class="form-select" ng-model="eg.titleGuest" id="eg7">
+								<option value="Mr.">Mr.</option>
+								<option value="Mrs.">Mrs.</option>
+								<option value="Miss">Miss</option>
+								<option value="Ms.">Ms.</option>
+								<option value="Dr.">Dr.</option>
+								<option value="Prof.">Prof.</option>
+								<option value="Rev.">Rev.</option>
+								<option value="Hon.">Hon.</option>
+								<option value="Sir">Sir</option>
+								<option value="Dame">Dame</option>
+								<option value="Mr. & Mrs.">Mr. & Mrs.</option>
+								<option value="Mr. & Family">Mr. & Family</option>
+								<option value="Ms. & Family">Ms. & Family</option>
+								<option value="Dr. & Mrs.">Dr. & Mrs.</option>
+								<option value="Capt.">Capt.</option>
+								<option value="Maj.">Maj.</option>
+								<option value="Col.">Col.</option>
+								<option value="Gen.">Gen.</option>
+								<option value="Lt.">Lt.</option>
+								<option value="Sgt.">Sgt.</option>
+								<option value="Lord">Lord</option>
+								<option value="Lady">Lady</option>
+								<option value="Duke">Duke</option>
+								<option value="Duchess">Duchess</option>
+							</select>
+							<label for="eg7">Title</label>
+						</div>
 						<div class="form-floating mb-2">
 							<input type="text" class="form-control" ng-model="eg.nameguest" placeholder="Name" required
 								id="eg1" ng-change="checkrepeat();">
