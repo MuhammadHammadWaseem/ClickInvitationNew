@@ -386,6 +386,10 @@ class GuestController extends Controller
                 if ($gm->id_meal != 0)
                     $gm->meal = \App\Meal::where('id_meal', $gm->id_meal)->first();
             }
+            foreach ($g->members as $gm) {
+                if ($gm->id_table != 0)
+                    $gm->table = \App\Table::where('id_table', $gm->id_table)->first();
+            }
 
             // Update properties for the main guest
             $g->isDeclined = $g->checkin;

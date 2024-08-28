@@ -1653,31 +1653,35 @@ sampleApp.controller("GuestslistCtrl", [
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `all_guest_list_${formattedDate}.csv`;
 
-      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,STATUS\n";
+      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,TABLE,STATUS\n";
       $scope.guests.forEach(function (guest) {
+        console.log("guest", guest);
         var status;
         var mealName;
         var title;
+        var table;
         if (guest.opened == 2) status = "Confirmed";
         else if (guest.declined == 1) status = "Declined";
         else if (guest.checkin == 1) status = "Checked-in";
         else status = "-";
-
+        table = guest.table ? guest.table.number : "-";
         mealName = guest.meal ? guest.meal.name : "-";
         title = guest.titleGuest ? guest.titleGuest : "-";
 
-        csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ?? "-"},${guest.email ?? "-"},${guest.phone ?? "-"},${guest.whatsapp ?? "-"},${mealName},${status}\n`;
+        csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ?? "-"},${guest.email ?? "-"},${guest.phone ?? "-"},${guest.whatsapp ?? "-"},${mealName},${table},${status}\n`;
         if (guest.members && guest.members.length > 0) {
           csvContent += "MEMBER, , , , , \n";
           guest.members.forEach(function (member) {
             var status;
             var mealName;
+            var table;
             if (member.opened == 2) status = "Confirmed";
             else if (member.declined == 1) status = "Declined";
             else if (member.checkin == 1) status = "Checked-in";
             else status = "-";
+            table = member.table ? member.table.number : "-";
             mealName = member.meal ? member.meal.name : "-";
-            csvContent += `${member.id_guest},${"-"},${member.name ?? "-"},${member.email ?? "-"},${member.phone ?? "-"},${member.whatsapp ?? "-"},${mealName},${status}\n`;
+            csvContent += `${member.id_guest},${"-"},${member.name ?? "-"},${member.email ?? "-"},${member.phone ?? "-"},${member.whatsapp ?? "-"},${mealName},${table},${status}\n`;
           });
         }
         csvContent += "GUEST, , , , , \n";
@@ -1698,7 +1702,7 @@ sampleApp.controller("GuestslistCtrl", [
       var currentDate = new Date();
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `confirmed_guest_list_${formattedDate}.csv`;
-      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,STATUS\n";
+      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,TABLE,STATUS\n";
 
       setTimeout(function () {
         $scope.ConfirmedGuests.forEach(function (guest) {
@@ -1706,7 +1710,8 @@ sampleApp.controller("GuestslistCtrl", [
             var status = "Confirmed";
             var mealName = guest.meal ? guest.meal.name : "-";
             var title = guest.titleGuest ? guest.titleGuest : "-";
-            csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ? guest.name : "-"},${guest.email ? guest.email : "-"},${guest.phone ? guest.phone : "-"},${guest.whatsapp ? guest.whatsapp : "-"},${mealName},${status}\n`;
+            var table = guest.table ? guest.table.number : "-";
+            csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ? guest.name : "-"},${guest.email ? guest.email : "-"},${guest.phone ? guest.phone : "-"},${guest.whatsapp ? guest.whatsapp : "-"},${mealName},${table},${status}\n`;
           }
           if (guest.members && guest.members.length > 0) {
             csvContent += "MEMBER, , , , , \n";
@@ -1714,7 +1719,8 @@ sampleApp.controller("GuestslistCtrl", [
               if ((member.checkin == 1 && member.declined == null && (member.id_meal != null || member.opened == 2)) || ((member.opened == 2 || member.id_meal != null) && member.declined == null)) {
                 var status = "Confirmed";
                 var mealName = member.meal ? member.meal.name : "-";
-                csvContent += `${member.id_guest},${"-"},${member.name ? member.name : "-"},${member.email ? member.email : "-"},${member.phone ? member.phone : "-"},${member.whatsapp ? member.whatsapp : "-"},${mealName},${status}\n`;
+                var table = member.table ? member.table.number : "-";
+                csvContent += `${member.id_guest},${"-"},${member.name ? member.name : "-"},${member.email ? member.email : "-"},${member.phone ? member.phone : "-"},${member.whatsapp ? member.whatsapp : "-"},${mealName},${table},${status}\n`;
               }
             });
           }
@@ -1740,30 +1746,33 @@ sampleApp.controller("GuestslistCtrl", [
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `declined_guest_list_${formattedDate}.csv`;
 
-      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,STATUS\n";
+      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,TABLE,STATUS\n";
       setTimeout(function () {
 
         var print = 0;
         $scope.DeclinedGuest.forEach(function (guest) {
           var mealName = guest.meal ? guest.meal.name : "-";
           var title = guest.titleGuest ? guest.titleGuest : "-";
+          var table = guest.table ? guest.table.number : "-";
           print = 0;
           if (guest.declined == 1) {
             print = 1;
             var status = "Declined";
-            csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ? guest.name : "-"},${guest.email ? guest.email : "-"},${guest.phone ? guest.phone : "-"}},${guest.whatsapp ? guest.whatsapp : "-"},${mealName},${status}\n`;
+            csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ? guest.name : "-"},${guest.email ? guest.email : "-"},${guest.phone ? guest.phone : "-"}},${guest.whatsapp ? guest.whatsapp : "-"},${mealName},${table},${status}\n`;
           }
 
           guest.members.forEach(function (member) {
             if (member.declined === 1) {
               // csvContent += "MEMBER, , , , , \n";
               var status;
+              console.log(member);
               var mealName = member.meal ? member.meal.name : "-";
+              var table = member.table ? member.table.number : "-";
               if (member.opened == 2) status = "Confirmed";
               else if (member.declined == 1) status = "Declined";
               else if (member.checkin == 1) status = "Checked-in";
               else status = "-";
-              csvContent += `${member.id_guest},${"-"},${member.name ? member.name : "-"},${member.email ? member.email : "-"},${member.phone ? member.phone : "-"},${member.whatsapp ? member.whatsapp : "-"},${mealName},${status}\n`;
+              csvContent += `${member.id_guest},${"-"},${member.name ? member.name : "-"},${member.email ? member.email : "-"},${member.phone ? member.phone : "-"},${member.whatsapp ? member.whatsapp : "-"},${mealName},${table},${status}\n`;
             }
           });
           if (print == 1) {
@@ -1790,24 +1799,26 @@ sampleApp.controller("GuestslistCtrl", [
       var currentDate = new Date();
       var formattedDate = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
       var filename = `checkedin_guest_list_${formattedDate}.csv`;
-      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,STATUS\n";
+      var csvContent = "ID,TITLE,NAME,EMAIL,PHONE,WHATSAPP,MEAL,TABLE,STATUS\n";
       setTimeout(function () {
 
         $scope.CheckedInGuests.forEach(function (guest) {
           var mealName = guest.meal ? guest.meal.name : "-";
           var title = guest.titleGuest ? guest.titleGuest : "-";
+          var table = guest.table ? guest.table.number : "-";
           if (guest.checkin == 1) {
             var status = 'Checked-in';
-            csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ? guest.name : "-"},${guest.email ? guest.email : "-"},${guest.phone ? guest.phone : "-"},${guest.whatsapp ? guest.whatsapp : "-"},${mealName},${status}\n`;
+            csvContent += `${guest.id_guest},${title ?? "-"},${guest.name ? guest.name : "-"},${guest.email ? guest.email : "-"},${guest.phone ? guest.phone : "-"},${guest.whatsapp ? guest.whatsapp : "-"},${mealName},${table},${status}\n`;
           }
 
           if (guest.members && guest.members.length > 0) {
             // csvContent += "MEMBER, , , , , \n";
             guest.members.forEach(function (member) {
               var mealName = member.meal ? member.meal.name : "-";
+              var table = member.table ? member.table.number : "-";
               if (member.checkin === 1) {
                 var status = 'Checked-in';
-                csvContent += `${member.id_guest},${"-"},${member.name},${member.email},${member.phone},${member.whatsapp},${mealName},${status}\n`;
+                csvContent += `${member.id_guest},${"-"},${member.name},${member.email},${member.phone},${member.whatsapp},${mealName},${table},${status}\n`;
               }
             });
           }
