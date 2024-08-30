@@ -1,3 +1,5 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 <style>
 	/* The Modal (background) */
 .modal {
@@ -143,12 +145,15 @@
 					<div class="row">
 						<div class="col-12 col-lg-4 col-md-6" ng-repeat="photo in galleries">
 							<div class="photo">
-								<img style="width: 100%;" class="thumb"
-									ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg"
-									ng-click="openModal('/event-images/' + photo.id_event + '/photogallery/' + photo.id_photogallery + '.jpg')" />
-								<button ng-click="delphotogallery(photo.id_photogallery);"><i
-										class="far fa-times-circle"></i></button>
+								<a href="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg" 
+								   data-lightbox="gallery" 
+								   data-title="Image {{photo.id_photogallery}}">
+									<img style="width: 100%;" class="thumb"
+										 ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg" />
+								</a>
+								<button ng-click="delphotogallery(photo.id_photogallery);"><i class="far fa-times-circle"></i></button>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -242,6 +247,10 @@
 <div ng-click="saveimages();" class="saver ng-hide" ng-show="saveyes">
 	<p>SAVE</p>
 </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
 <script>
 	var idevent = window.location.pathname.split("/")[2];
