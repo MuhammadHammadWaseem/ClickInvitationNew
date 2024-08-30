@@ -57,7 +57,7 @@
                     <div class="card mb-4">
                         <h4 class="card-header text-center"><i
                                 class="fal fa-user-check"></i>{{ __('checkin.CHECK-IN') }}</h4>
-                                <h6 class="card-header text-center">Please only check in once you are physically at the reception venue.</h2>
+                                <h6 class="card-header text-center">Please confirm tour attendance and check in once you are at the reception hall the day of the event.</h2>
                         <div class="card-body">
                             <div ng-class="guest.checkin? 'row giftl bgreen':'row giftl'">
                                 <div class="col">
