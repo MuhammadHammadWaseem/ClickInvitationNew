@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="/assets/panelstyle.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <script src="/assets/jspanel/jquery.min.js"></script>
     <script src="/assets/jspanel/sortable.min.js"></script>
@@ -55,7 +57,8 @@
                     <div class="card mb-4">
                         <h4 class="card-header text-center"><i
                                 class="fal fa-user-check"></i>{{ __('checkin.CHECK-IN') }}</h4>
-                        <div class="card-body mt-5">
+                                <h6 class="card-header text-center">Please only check in once you are physically at the reception venue.</h2>
+                        <div class="card-body">
                             <div ng-class="guest.checkin? 'row giftl bgreen':'row giftl'">
                                 <div class="col">
                                     <p>@{{ guest.name }}</p>
@@ -72,8 +75,8 @@
                                             {{ __('checkin.CHECK-IN') }}
                                         </label>
                                         <input class="form-check-input" type="checkbox" value=""
-                                            ng-checked="guest.checkin" id="flexCheckChecked"
-                                            ng-click="ch(guest.id_guest);">
+                                            ng-checked="guest.checkin" id="flexCheckChecked" data-opened="@{{guest.opened}}" data-meal="@{{guest.id_meal}}"
+                                            ng-click="ch(guest.id_guest, $event);">
                                     </div>
                                 </div>
                             </div>
@@ -98,8 +101,8 @@
                                         <label class="form-check-label" ng-hide="g.checkin">
                                             {{ __('checkin.CHECK-IN') }}
                                         </label>
-                                        <input class="form-check-input" type="checkbox" ng-checked="g.checkin"
-                                            ng-click="ch(g.id_guest);">
+                                        <input class="form-check-input" type="checkbox" ng-checked="g.checkin" data-opened="@{{g.opened}}" data-meal="@{{g.id_meal}}"
+                                            ng-click="ch(g.id_guest, $event);">
                                     </div>
                                 </div>
                             </div>
@@ -115,6 +118,26 @@
         <div class="loader ng-hide" ng-show="loading">
             <img src="/assets/panelimages/loader.svg">
         </div>
+
+        <div class="modal" tabindex="-1" id="modal" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Confirm</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Please must be confirme and choose your meal before check-in.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
         <div ng-click="decline();" class="saver ng-hide" ng-show="saveyes">
             <p>{{ __('checkin.SAVE') }}</p>
@@ -155,16 +178,55 @@
                     $scope.loading = 0;
                 }, 300);
 
-                $scope.ch = function(idg) {
-                    $http({
-                        method: 'POST',
-                        url: '/change-check',
+                $scope.ch = function(idg, event) {
+                    var element = angular.element(event.currentTarget);
+                    var meal = element.attr('data-meal');
+                    var opened = element.attr('data-opened');
+
+                    if(opened == 2 && (meal != null && meal != undefined && meal != '')){
+                        element.prop('checked', true);
+                        $http({
+                                method: 'POST',
+                                url: '/change-check',
                         data: {
                             idguest: idg
                         },
-                    }).then(function(response) {
-                        $scope.showguests();
-                    });
+                        }).then(function(response) {
+                            $scope.showguests();
+                            if(response.data == 1){
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thank you!',
+                                    text: 'You have successfully checked in.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                        });
+                    }else{
+                        element.prop('checked', false);
+
+                        var currentUrl = window.location.href;
+                        var urlParts = currentUrl.split('/');
+                        var guestId = urlParts[4];
+                        var guestCode = urlParts[5];
+                        var languageCode = urlParts[6];
+                        var confirmAttendanceUrl = '/attending/' + guestId + '/' + guestCode + '/' + languageCode;
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Check-in failed',
+                            text: 'You must confirm your attendance and select a meal option before checking in.',
+                            showCancelButton: true,
+                            confirmButtonText: 'Confirm Attendance',
+                            cancelButtonText: 'Cancel',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = confirmAttendanceUrl;
+                            }
+                        });
+
+                    }
                 };
 
                 /*$scope.$watchGroup(["decliner"], function(newValue, oldValue) {

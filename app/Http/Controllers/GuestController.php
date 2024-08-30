@@ -937,14 +937,17 @@ class GuestController extends Controller
     {
         $guest = \App\Guest::where('id_guest', $request->idguest)->first();
         if ($guest) {
-            if ($guest->checkin == 1)
+            if ($guest->checkin == 1){
                 $guest->checkin = 0;
-            else
+                $guest->save();
+                return 0;
+            }
+            else{
                 $guest->checkin = 1;
-            // $guest->opened = null;
-            $guest->save();
+                $guest->save();
+                return 1;
+            }
         }
-        return 1;
     }
 
     public function guestcheck(Request $request)
