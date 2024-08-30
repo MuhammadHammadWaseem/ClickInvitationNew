@@ -174,7 +174,7 @@ display: none;
 						</div>
 					  </div>
 
-					<div class="photo" ng-repeat="photo in galleries">
+					<div class="photo" ng-repeat="photo in galleries | orderBy:'-id_photogallery'">
 						<img class="thumb"
 							ng-src="/event-images/{{photo.id_event}}/photogallery/{{photo.id_photogallery}}.jpg"
 							height="75" />

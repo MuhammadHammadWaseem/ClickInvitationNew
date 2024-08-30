@@ -38,7 +38,7 @@
         @if ($photogallery->count() > 0)
             <h1 class="text-center mb-5">Images</h1>
             <div class="row">
-                @foreach ($photogallery as $photo)
+                @foreach ($photogallery->reverse() as $photo)
                 <div class="col-md-2 mb-4">
                     <a href="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg" data-lightbox="gallery" 
                         data-title="Image {{ $loop->index + 1 }}" class="gallery-image">
