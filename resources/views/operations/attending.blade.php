@@ -327,9 +327,12 @@
             <div class="row justify-content-md-center">
 
                 <div class="col-12">
-                    <button style="border: 0;background: rgba(0,0,0,0);margin-top:15px; color: #212529" class="back"
-        onclick="window.location.href = document.referrer;"><i class="fas fa-chevron-left"></i>
-        {{ __('attending.BACK TO INVITATION') }}</button>
+                    <button style="border: 0;background: rgba(0,0,0,0);margin-top:15px; color: #212529" class="back" id="backBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    {{ __('attending.BACK TO INVITATION') }}</button>
+                    {{-- <button style="border: 0;background: rgba(0,0,0,0);margin-top:15px; color: #212529" class="back"
+                        onclick="window.location.href = document.referrer;"><i class="fas fa-chevron-left"></i>
+                    {{ __('attending.BACK TO INVITATION') }}</button> --}}
 
                     <div class="card mb-4">
                         <h4 class="card-header text-center main-heading"><i
@@ -980,6 +983,20 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+
+            var currentUrl = window.location.href;
+            var urlParts = currentUrl.split('/');
+            var guestId = urlParts[4];
+            var guestCode = urlParts[5];
+            var languageCode = urlParts[6];
+            var guestName = "{{ $guest->name }}";
+            var url  = '/cardInvitations/' + guestId + '/' + guestCode + '/' + guestName + '/' + languageCode;
+
+            var backBtn = document.getElementById('backBtn');
+            backBtn.addEventListener('click', function() {
+                window.location.href = url;
+            })
+
             var memberNumber;
             // Get the name field
             const nameField = document.querySelector('#memberName');
