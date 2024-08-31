@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="/assets/websitestyle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
@@ -213,12 +215,15 @@
                 </div>
             </div>
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col">
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @foreach ($photogallery as $photo)
                                 <div class="carousel-item @if ($loop->first) active @endif">
+                                    <a href="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg" 
+								   data-lightbox="gallery" 
+								   data-title="Image {{ $loop->iteration }}" class="img-thumbnail">
                                     <img src="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg"
                                         class="d-block w-100" height="600px">
                                 </div>
@@ -242,7 +247,43 @@
                         </button>
                     </div>
                 </div>
+            </div> --}}
+
+            <div class="row">
+                <div class="col">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @php
+                                // Ensure the collection is sorted in descending order based on a specific field.
+                                $sortedPhotogallery = $photogallery->sortByDesc('id_photogallery');
+                            @endphp
+            
+                            @foreach ($sortedPhotogallery as $photo)
+                                <div class="carousel-item @if ($loop->first) active @endif">
+                                    <a href="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg" 
+                                       data-lightbox="gallery" 
+                                       data-title="Image {{ $loop->iteration }}" 
+                                       class="img-thumbnail">
+                                        <img src="/event-images/{{ $photo->id_event }}/photogallery/{{ $photo->id_photogallery }}.jpg"
+                                             class="d-block w-100" height="600px">
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                            data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
             </div>
+            
 
             {{-- VIDEO --}}
             <div class="row">
@@ -355,6 +396,9 @@
         </div>
     </footer>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 
     <script src="/assets/jspanel/bootstrap.min.js"></script>
 </body>
