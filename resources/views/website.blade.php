@@ -33,6 +33,18 @@
     <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon">
 
     <script src="/assets/jspanel/jquery.min.js"></script>
+
+    <style>
+        .lb-next{
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .lb-prev{
+            display: block !important;
+            opacity: 1 !important;
+        }
+    </style>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#sp">

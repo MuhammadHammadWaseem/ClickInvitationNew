@@ -31,6 +31,15 @@
         .lightbox .lb-nav {
             display: block !important; /* Show buttons */
         }
+        .lb-next{
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .lb-prev{
+            display: block !important;
+            opacity: 1 !important;
+        }
     </style>
 </head>
 <body>
