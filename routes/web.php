@@ -138,6 +138,9 @@ Route::get('/cardPreviewNew/{id}', 'PanelController@cardPreviewNew');
 Route::get('/babyShowerPreview/{id}', 'PanelController@babyShowerPreview');
 Route::get('/cakeCardPreview/{id}', 'PanelController@cakeCardPreview');
 
+Route::post('/save-options', 'PanelController@saveOptions')->name('save.options');
+
+
 Route::get('/get-csrf-token', 'PanelController@getCSRFToken');
 
 Route::get('/event/get-card/{event_id}', 'PanelController@getCard');

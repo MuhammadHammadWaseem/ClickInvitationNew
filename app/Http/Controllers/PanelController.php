@@ -39,6 +39,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Symfony\Component\HttpClient\HttpClient;
 use App\Mail\MealInvitation;
+use App\GuestOption;
 
 
 
@@ -827,21 +828,21 @@ class PanelController extends Controller
                 // dd($request->file('gall'), $request->idevent, $request->guestCode);
 
                 foreach ($request->file('gall') as $photo) {
-                // dd($request->file('gall'));
-                if ($photo->isValid()) {
-                $photogallery = new \App\Photogallery;
-                $photogallery->id_event = $request->idevent;
-                $photogallery->guestCode = $request->guestCode ?? null;
-                $photogallery->save();
+                    // dd($request->file('gall'));
+                    if ($photo->isValid()) {
+                        $photogallery = new \App\Photogallery;
+                        $photogallery->id_event = $request->idevent;
+                        $photogallery->guestCode = $request->guestCode ?? null;
+                        $photogallery->save();
 
-                $fileName = $photo->getClientOriginalName();
-                $photo->move(public_path('event-images/' . $request->idevent . '/photogallery'), $photogallery->id_photogallery . ".jpg");
+                        $fileName = $photo->getClientOriginalName();
+                        $photo->move(public_path('event-images/' . $request->idevent . '/photogallery'), $photogallery->id_photogallery . ".jpg");
+                    }
                 }
-                }
-                if(count($request->file('gall')) > 2){
+                if (count($request->file('gall')) > 2) {
                     session()->flash('success', 'Your Photos has been successfully uploaded! Enjoy the party!');
                     return redirect()->back();
-                }else{
+                } else {
                     session()->flash('success', 'Your Photo has been successfully uploaded! Enjoy the party!');
                     return redirect()->back();
                 }
@@ -913,13 +914,13 @@ class PanelController extends Controller
 
             return redirect()->back();
         } else
-        return response()->json(['error' => 'Event not found.'], 404);
+            return response()->json(['error' => 'Event not found.'], 404);
     }
 
     public function savevideogallery(Request $request)
     {
-        
-    } 
+
+    }
 
     private function saveRecImage($imageData, $eventId, $fileName)
     {
@@ -1633,6 +1634,19 @@ class PanelController extends Controller
             // Handle the case when no animation details are found
             abort(404, 'Animation details not found');
         }
+
+        $guestOptions = GuestOption::where('guest_id', $guest->id_guest)->where('event_id', $card->id_event)->first();
+        if (!$guestOptions) {
+            $guestOptions = new GuestOption();
+            $guestOptions->gift = 0;
+            $guestOptions->checkin = 0;
+            $guestOptions->photos = 0;
+            $guestOptions->website = 0;
+            $guestOptions->rsp = 0;
+            $guestOptions->event_id = $card->id_event;
+            $guestOptions->guest_id = $guest->id_guest;
+            $guestOptions->save();
+        }
         // dd($animationDetails);
         // Return the view with the necessary data
         return view($animationDetails->file_animation, [
@@ -1642,8 +1656,29 @@ class PanelController extends Controller
             'guestName' => ($guest) ? $guest->name : null, // Handle the case when guest is not found
             "isCouple" => $eventType->couple_event,
             "eventType" => $eventType,
-            "eventData" => $eventData
+            "eventData" => $eventData,
+            "guestOptions" => $guestOptions
         ]);
+    }
+
+    public function saveOptions(Request $req)
+    {
+        foreach ($req->guests_ids as $guest) {
+            if(GuestOption::where('event_id', $req->idevent)->where('guest_id', $guest)->exists()){
+                GuestOption::where('event_id', $req->idevent)->where('guest_id', $guest)->delete();
+            }
+            GuestOption::create([
+                'event_id' => $req->idevent ?? 0,
+                'guest_id' => $guest ?? 0,
+                'gift' => $req->gift ?? 0,
+                'checkin' => $req->checkin ?? 0,
+                'photos' => $req->photos ?? 0,
+                'website' => $req->website ?? 0,
+                'rsp' => $req->rsp ?? 0,
+            ]);
+        }
+
+        return response()->json('Options Create Successfully');
     }
 
 
@@ -2147,10 +2182,13 @@ class PanelController extends Controller
 
                 $curl = curl_init();
                 curl_setopt($curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                    'Authorization: Bearer EAAJNk9TfhxABO3X5qWWvFKtFZBrIOTuWgZBhBCEzgOlAoQHSeV82GfAayZA0St1AzL3Mj5NXJ3NpO6zgGQIhrOfOMoMOzcbAMCywNZBtWIq6F9H2ZA7VZCVhnZA78BAZA0wWZAwPd6mwYnTKApA35S1oVrKwCZBB9xeseZBn6C52bX3lVdqTbR0aWZAU0GMZD',
-                    'Content-Type: application/json'
-                )
+                curl_setopt(
+                    $curl,
+                    CURLOPT_HTTPHEADER,
+                    array(
+                        'Authorization: Bearer EAAJNk9TfhxABO3X5qWWvFKtFZBrIOTuWgZBhBCEzgOlAoQHSeV82GfAayZA0St1AzL3Mj5NXJ3NpO6zgGQIhrOfOMoMOzcbAMCywNZBtWIq6F9H2ZA7VZCVhnZA78BAZA0wWZAwPd6mwYnTKApA35S1oVrKwCZBB9xeseZBn6C52bX3lVdqTbR0aWZAU0GMZD',
+                        'Content-Type: application/json'
+                    )
                 );
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                 $data = [
@@ -2189,7 +2227,7 @@ class PanelController extends Controller
                 echo $resp;
             }
             if ($guest['phone'] != null && $guest['phone'] != "") {
-            
+
                 if ($lang == 'en') {
                     $params = ['MessagingServiceSid' => 'MG1638f5c41f52b36db3469924b8ff345a', 'To' => $guest['phone'], 'Body' => 'Hi ' . $guest['name'] . "\n\n" . "Please select your meal for the " . $event['name'] . " event." . "\n\n" . "Thank you! " . "\n" . "Click Invitation"];
                 } elseif ($lang == 'fr') {
@@ -2206,8 +2244,8 @@ class PanelController extends Controller
                 curl_setopt($ch, CURLOPT_USERPWD, 'AC23420c2979a6b17c66be8716156b3424:af04ad9f56df5b0132389583a0e46061');
                 $data = curl_exec($ch);
                 curl_close($ch);
-            
-            } 
+
+            }
         }
         return response()->json(['message' => 'Invitations sent successfully.']);
     }
@@ -2216,43 +2254,43 @@ class PanelController extends Controller
     // {
     //     // Include the QR code library
     //     require_once base_path('app/Http/Controllers/phpqrcode/qrlib.php');
-    
+
     //     // Generate the URL for the QR code
     //     $url = url("/add-photos-all/{$id}");
-    
+
     //     // Start output buffering to capture the QR code output
     //     ob_start();
     //     \QRcode::png($url, null, 'H', 4, 4);
     //     $imageData = ob_get_contents();
     //     ob_end_clean();
-    
+
     //     // Define the headers for the response to force download
     //     $headers = [
     //         'Content-Type' => 'image/png',
     //         'Content-Disposition' => 'attachment; filename="qr-code.png"',
     //         'Content-Length' => strlen($imageData),
     //     ];
-    
+
     //     // Return the response with the image data and headers
     //     return response($imageData, 200, $headers);
     // }
     public function photosqr($id)
-{
-    require_once base_path('app/Http/Controllers/phpqrcode/qrlib.php');
+    {
+        require_once base_path('app/Http/Controllers/phpqrcode/qrlib.php');
 
-    $url = url("/add-photos-all/{$id}");
+        $url = url("/add-photos-all/{$id}");
 
-    ob_start();
-    \QRcode::png($url, null, 'H', 4, 4);
-    $imageData = ob_get_contents();
-    ob_end_clean();
+        ob_start();
+        \QRcode::png($url, null, 'H', 4, 4);
+        $imageData = ob_get_contents();
+        ob_end_clean();
 
-    $base64Image = base64_encode($imageData);
+        $base64Image = base64_encode($imageData);
 
-    return response()->json([
-        'image' => 'data:image/png;base64,' . $base64Image
-    ]);
-}
+        return response()->json([
+            'image' => 'data:image/png;base64,' . $base64Image
+        ]);
+    }
 
 
 }

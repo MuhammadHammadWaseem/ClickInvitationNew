@@ -1344,7 +1344,6 @@ sampleApp.controller("GuestslistCtrl", [
         return false;
     };
   
-  
 
     $scope.guestlistDeclined = function () {
       $http({
@@ -2222,7 +2221,8 @@ sampleApp.controller("GuestslistCtrl", [
         if ($scope.guests[key].selected == 1) {
           console.log($scope.guests[key]);
           if ($scope.guests[key].email != '' || $scope.guests[key].phone != '' || $scope.guests[key].whatsapp != '') {
-            $("#sendModal").modal("show");
+            // $("#sendModal").modal("show");
+            $('#selectOptionModal').modal('show');
           } else {
             $scope.reset();
             $scope.idguestedit();
@@ -2234,7 +2234,8 @@ sampleApp.controller("GuestslistCtrl", [
           angular.forEach($scope.guests[key].members, function (value2, key2) {
             if ($scope.guests[key].members[key2].selected == 1) {
               if ($scope.guests[key].members[key2].email != "" || $scope.guests[key].members[key2].phone != "" || $scope.guests[key].members[key2].whatsapp != "") {
-                $("#sendModal").modal("show");
+                // $("#sendModal").modal("show");
+                $('#selectOptionModal').modal('show');
               } else {
                 $scope.reset();
                 $scope.idguestedit();
@@ -2245,6 +2246,51 @@ sampleApp.controller("GuestslistCtrl", [
         }
       });
     };
+
+    $scope.saveOptions = function () {
+      var guests_ids = [];
+
+      angular.forEach($scope.guests, function (value, key) {
+        if ($scope.guests[key].selected == 1) {
+          guests_ids.push($scope.guests[key].id_guest);
+        }
+        else {
+          angular.forEach($scope.guests[key].members, function (value2, key2) {
+            if ($scope.guests[key].members[key2].selected == 1) {
+              guests_ids.push($scope.guests[key].members[key2].id_guest);
+            }
+          });
+        }
+      });
+
+      console.log(guests_ids);
+
+        $http({
+          method: "POST",
+          url: "/save-options",
+          data: {
+            idevent: window.location.pathname.split("/")[2],
+            guests_ids: guests_ids,
+            gift: $scope.gift,
+            checkin: $scope.checkin,
+            photos: $scope.photos,
+            website: $scope.website,
+            rsp: $scope.rsp
+          },
+        }).then(function (response) {
+          console.log("success", response);
+          $("#selectOptionModal").modal("hide");
+          $("#sendModal").modal("show");
+        });
+    }
+
+    $scope.openOptionModal = function () {
+      $('#selectOptionModal').modal('show');
+    }
+    $scope.closeOptionModal = function () {
+      $('#selectOptionModal').modal('hide');
+    }
+  
 
     $scope.checkFieldsForMultiple = function () {
       var allFieldsFilled = true;
@@ -2270,7 +2316,8 @@ sampleApp.controller("GuestslistCtrl", [
       });
 
       if (allFieldsFilled) {
-        $("#sendModal").modal("show");
+        // $("#sendModal").modal("show");
+        $('#selectOptionModal').modal('show');
       } else {
         Swal.fire({
           icon: 'error',
