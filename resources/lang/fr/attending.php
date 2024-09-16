@@ -38,6 +38,7 @@ return[
 'You are already Counted' => 'Vous êtes déjà compté',
 'EDIT MEMBER' => 'Modifier l\'invité',
 'DECLINED' => 'Diminué',
+'Regretfully Decline' => 'Décliner à regret',
 'Add your Compagnons' => 'Ajoutez vos Compagnons',
 'allowed' => 'autorisés',
 'Compagnons Guests' => 'Compagnons invités',

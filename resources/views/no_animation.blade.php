@@ -109,7 +109,7 @@
 
                 @if ($card[0]->rsvp[8] == '1')
                     <a href="{{ env('APP_URL') }}/sorry-cant/{{ $card[0]->id_card }}/{{ $guestCode }}/{{ $lang or '' }}"
-                        class="btn btn-outline-secondary modify ">{{ __('cardinvit.Sorry! I Can\'t') }}</a>
+                        class="btn btn-outline-secondary modify ">{{ __('cardinvit.Unable to Attend') }}</a>
                 @endif
 
                 @if ($card[0]->rsvp[10] == '1')

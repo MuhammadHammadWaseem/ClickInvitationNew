@@ -391,7 +391,7 @@
                                         <button style="width: 100%" class="btn btn-outline-danger btn-sm mb-1 mt-1"
                                             ng-click="declineGuest({{ $guest->id_guest }})" name="guest_id"
                                             value="{{ $guest->id_guest }}"> <i class="iconstyle  fa-times"></i>
-                                            <p>{{ __('attending.DECLINED') }}</p>
+                                            <p>{{ __('attending.Regretfully Decline') }}</p>
                                         </button>
                                     @endif
 
@@ -473,7 +473,7 @@
                                                 ng-value="member.id_guest">
                                                 <i class="fal fa-times" style="color: #ab0404;"
                                                     aria-hidden="true"></i>
-                                                <p> {{ __('attending.DECLINED') }}</p>
+                                                <p> {{ __('attending.Regretfully Decline') }}</p>
                                             </button>
                                             <button id="confirm" ng-if="member.opened == null || member.opened == 1"
                                                 class="btns mb-1 mt-1" ng-click="confirmGuest(member.id_guest)"

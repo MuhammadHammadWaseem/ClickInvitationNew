@@ -11,6 +11,7 @@ return[
 'EDIT' => 'Choose a meal',
 'CONFIRM' => 'Confirm',
 'DECLINED' => 'Decline',
+'Regretfully Decline' => 'Regretfully Decline',
 'ADDED GUESTS:' => 'Added Guests:',
 'EDIT MEMBER' => 'Edit Guest',
 'UPDATE GUEST' => 'Update Guest',
