@@ -1858,7 +1858,88 @@ function generateCanvasImageFromJSON(jsonData) {
 function handleJSONImport() {
   var id = window.location.pathname.split("/")[2];
   const backElement = document.getElementById('back');
+  const backElement2 = document.getElementById('back2');
   if (backElement.checked) {
+    console.log("Back is checked.");
+    console.log("Get Back Json.");
+    $.ajax({
+      type: "GET",
+      url: `/get-json/back?id=${id}`,
+      success: function (response) {
+        if (response) {
+          if (response.data == null) {
+            if (canv.backgroundImage == null) {
+              var imageUrl = "https://clickadmin.searchmarketingservices.online/eventcards/1690902229.jpeg";
+              // Load the background image onto the canvas
+              fabric.Image.fromURL(imageUrl, function (img) {
+                // Adjust the image size to fit the canvas
+                img.scaleToWidth(canv.width);
+                img.scaleToHeight(canv.height);
+                canv.setBackgroundImage(img, canv.renderAll.bind(canv), {
+                  // Set options as needed
+                  originX: 'left',
+                  originY: 'top'
+                });
+              });
+            }
+
+            if (!Array.isArray(canv._iTextInstances) || canv._iTextInstances.length === 0) {
+              addGroom();
+              addBride();
+              addAnd();
+              AddEvent();
+              AddTime();
+              AddPlace();
+              AddCity();
+            }
+          }
+        } else {
+        }
+        const file = response.data;
+        fetch(`/Json/${file}`)
+          .then((res) => {
+            return res.json();
+          })
+          .then(function (data) {
+            const jsonData = data;
+
+            if (jsonData.objects.length == 1) {
+              // Check if the canvas has no iText instances
+              if (canv.backgroundImage == null) {
+                var imageUrl = "https://clickadmin.searchmarketingservices.online/eventcards/1690902229.jpeg";
+                // Load the background image onto the canvas
+                fabric.Image.fromURL(imageUrl, function (img) {
+                  // Adjust the image size to fit the canvas
+                  img.scaleToWidth(canv.width);
+                  img.scaleToHeight(canv.height);
+                  canv.setBackgroundImage(img, canv.renderAll.bind(canv), {
+                    // Set options as needed
+                    originX: 'left',
+                    originY: 'top'
+                  });
+                });
+              }
+
+              if (!Array.isArray(canv._iTextInstances) || canv._iTextInstances.length === 0) {
+                addGroom();
+                addBride();
+                addAnd();
+                AddEvent();
+                AddTime();
+                AddPlace();
+                AddCity();
+              }
+            } else {
+              canv.clear();
+              canv.loadFromJSON(jsonData, function () {
+                canv.requestRenderAll();
+              });
+            }
+
+          });
+      },
+    });
+  } else if (backElement2.checked) {
     console.log("Back is checked.");
     console.log("Get Back Json.");
     $.ajax({
@@ -2246,6 +2327,7 @@ save1.addEventListener("click", function () {
 
 function saveData() {
   const backElement = document.getElementById('back');
+  const backElement2 = document.getElementById('back2');
   if (backElement.checked) {
     console.log("Back is checked.Preview");
     const json = JSON.stringify(canv.toJSON());
@@ -2277,6 +2359,86 @@ function saveData() {
         console.error("Error:", error);
       });
     // saveSetting();
+  } else if (backElement2.checked) {
+    console.log("Back is checked.");
+    console.log("Get Back Json.");
+    $.ajax({
+      type: "GET",
+      url: `/get-json/back?id=${id}`,
+      success: function (response) {
+        if (response) {
+          if (response.data == null) {
+            if (canv.backgroundImage == null) {
+              var imageUrl = "https://clickadmin.searchmarketingservices.online/eventcards/1690902229.jpeg";
+              // Load the background image onto the canvas
+              fabric.Image.fromURL(imageUrl, function (img) {
+                // Adjust the image size to fit the canvas
+                img.scaleToWidth(canv.width);
+                img.scaleToHeight(canv.height);
+                canv.setBackgroundImage(img, canv.renderAll.bind(canv), {
+                  // Set options as needed
+                  originX: 'left',
+                  originY: 'top'
+                });
+              });
+            }
+
+            if (!Array.isArray(canv._iTextInstances) || canv._iTextInstances.length === 0) {
+              addGroom();
+              addBride();
+              addAnd();
+              AddEvent();
+              AddTime();
+              AddPlace();
+              AddCity();
+            }
+          }
+        } else {
+        }
+        const file = response.data;
+        fetch(`/Json/${file}`)
+          .then((res) => {
+            return res.json();
+          })
+          .then(function (data) {
+            const jsonData = data;
+
+            if (jsonData.objects.length == 1) {
+              // Check if the canvas has no iText instances
+              if (canv.backgroundImage == null) {
+                var imageUrl = "https://clickadmin.searchmarketingservices.online/eventcards/1690902229.jpeg";
+                // Load the background image onto the canvas
+                fabric.Image.fromURL(imageUrl, function (img) {
+                  // Adjust the image size to fit the canvas
+                  img.scaleToWidth(canv.width);
+                  img.scaleToHeight(canv.height);
+                  canv.setBackgroundImage(img, canv.renderAll.bind(canv), {
+                    // Set options as needed
+                    originX: 'left',
+                    originY: 'top'
+                  });
+                });
+              }
+
+              if (!Array.isArray(canv._iTextInstances) || canv._iTextInstances.length === 0) {
+                addGroom();
+                addBride();
+                addAnd();
+                AddEvent();
+                AddTime();
+                AddPlace();
+                AddCity();
+              }
+            } else {
+              canv.clear();
+              canv.loadFromJSON(jsonData, function () {
+                canv.requestRenderAll();
+              });
+            }
+
+          });
+      },
+    });
   } else {
     console.log("Back is not checked.");
     const json = JSON.stringify(canv.toJSON());
@@ -2359,6 +2521,7 @@ function saveSetting() {
 function saveAll() {
 
   const backElement = document.getElementById('back');
+  const backElement2 = document.getElementById('back2');
   if (backElement.checked) {
     console.log("Back is checked.");
 
@@ -2418,6 +2581,86 @@ function saveAll() {
     // saveSetting();
 
 
+  }else if (backElement2.checked) {
+    console.log("Back is checked.");
+    console.log("Get Back Json.");
+    $.ajax({
+      type: "GET",
+      url: `/get-json/back?id=${id}`,
+      success: function (response) {
+        if (response) {
+          if (response.data == null) {
+            if (canv.backgroundImage == null) {
+              var imageUrl = "https://clickadmin.searchmarketingservices.online/eventcards/1690902229.jpeg";
+              // Load the background image onto the canvas
+              fabric.Image.fromURL(imageUrl, function (img) {
+                // Adjust the image size to fit the canvas
+                img.scaleToWidth(canv.width);
+                img.scaleToHeight(canv.height);
+                canv.setBackgroundImage(img, canv.renderAll.bind(canv), {
+                  // Set options as needed
+                  originX: 'left',
+                  originY: 'top'
+                });
+              });
+            }
+
+            if (!Array.isArray(canv._iTextInstances) || canv._iTextInstances.length === 0) {
+              addGroom();
+              addBride();
+              addAnd();
+              AddEvent();
+              AddTime();
+              AddPlace();
+              AddCity();
+            }
+          }
+        } else {
+        }
+        const file = response.data;
+        fetch(`/Json/${file}`)
+          .then((res) => {
+            return res.json();
+          })
+          .then(function (data) {
+            const jsonData = data;
+
+            if (jsonData.objects.length == 1) {
+              // Check if the canvas has no iText instances
+              if (canv.backgroundImage == null) {
+                var imageUrl = "https://clickadmin.searchmarketingservices.online/eventcards/1690902229.jpeg";
+                // Load the background image onto the canvas
+                fabric.Image.fromURL(imageUrl, function (img) {
+                  // Adjust the image size to fit the canvas
+                  img.scaleToWidth(canv.width);
+                  img.scaleToHeight(canv.height);
+                  canv.setBackgroundImage(img, canv.renderAll.bind(canv), {
+                    // Set options as needed
+                    originX: 'left',
+                    originY: 'top'
+                  });
+                });
+              }
+
+              if (!Array.isArray(canv._iTextInstances) || canv._iTextInstances.length === 0) {
+                addGroom();
+                addBride();
+                addAnd();
+                AddEvent();
+                AddTime();
+                AddPlace();
+                AddCity();
+              }
+            } else {
+              canv.clear();
+              canv.loadFromJSON(jsonData, function () {
+                canv.requestRenderAll();
+              });
+            }
+
+          });
+      },
+    });
   } else {
     console.log("Back is not checked.");
 
@@ -3128,7 +3371,15 @@ function toggleSide(element) {
     // Add logic for editing the front side
     console.log('Editing Front');
     handleJSONImport();
+  } else if (element.id === 'front2') {
+    // Add logic for editing the front side
+    console.log('Editing Front');
+    handleJSONImport();
   } else if (element.id === 'back') {
+    console.log('Editing Back');
+    // Add logic for editing the back side
+    handleJSONImport();
+  } else if (element.id === 'back2') {
     console.log('Editing Back');
     // Add logic for editing the back side
     handleJSONImport();

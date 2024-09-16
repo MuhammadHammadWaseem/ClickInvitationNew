@@ -486,10 +486,10 @@ display: none;
     </div>
 
 <div class="col-auto" id="frontBackBox2" style="display: none;padding: 0%; margin: 0%;">
-    <label for="front" class="btn topbtns">Edit Front</label>
-    <input type="radio" name="edit" id="front" onchange="toggleSide(this)">
-    <label for="back" class="btn topbtns">Edit Back</label>
-    <input type="radio" name="edit" id="back" onchange="toggleSide(this)">
+    <label for="front2" class="btn topbtns">Edit Front</label>
+    <input type="radio" name="edit" id="front2" onchange="toggleSide(this)">
+    <label for="back2" class="btn topbtns">Edit Back</label>
+    <input type="radio" name="edit" id="back2" onchange="toggleSide(this)">
 </div>
 
         </div>
